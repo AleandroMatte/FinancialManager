@@ -1,5 +1,7 @@
 package com.aleandro.financial.models;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -22,6 +24,9 @@ public class Recebimentos extends BaseModel {
 	@ManyToOne
 	@JoinColumn(name = "tipo_recebimento_id", referencedColumnName = "id")
 	private TipoRecebimento recorrencia;
+	
+	@Column(name="data_recebimento")
+	private Date data_recebimento;
 
 	public Boolean getRecebida() {
 		return recebida;
@@ -58,6 +63,15 @@ public class Recebimentos extends BaseModel {
 	public void setOrigem(String origem) {
 		this.origem = origem;
 	}
+
+	public Date getData_recebimento() {
+		return data_recebimento;
+	}
+
+	public void setData_recebimento(Date data_recebimento) {
+		this.data_recebimento = data_recebimento;
+	}
+	
 	
 	
 

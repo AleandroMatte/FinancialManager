@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aleandro.financial.models.BaseModel;
 import com.aleandro.financial.models.User;
 import com.aleandro.financial.services.UserServices;
 
@@ -35,7 +36,7 @@ public class UserController {
 	
 	@GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<User> get_all_users() {
-		return user_service.Mock_user_list(19);
+		return user_service.get_all_users();
 			
 		}
 	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)

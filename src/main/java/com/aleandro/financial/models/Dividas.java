@@ -1,5 +1,7 @@
 package com.aleandro.financial.models;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -22,6 +24,11 @@ public class Dividas extends BaseModel {
 	@ManyToOne
 	@JoinColumn(name = "tipo_dividas_id", referencedColumnName = "id")
 	private TipoDividas recorrencia;
+	
+	@Column(name="data_pagamento")
+	private Date data_pagamento;
+	
+	
 	
 	
 
@@ -68,6 +75,18 @@ public class Dividas extends BaseModel {
 	public void setDestino(String destino) {
 		this.destino = destino;
 	}
+
+
+	public Date getData_pagamento() {
+		return data_pagamento;
+	}
+
+
+	public void setData_pagamento(Date data_pagamento) {
+		this.data_pagamento = data_pagamento;
+	}
+	
+	
 	
 
 }
