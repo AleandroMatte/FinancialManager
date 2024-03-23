@@ -1,6 +1,5 @@
 package com.aleandro.financial.models;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity(name = "user")
 @Table(name = "user")
-public class User extends BaseModel implements Serializable{
+public class User extends BaseModel {
 	
 	@Column(name = "username", nullable = false)
 	private String name;

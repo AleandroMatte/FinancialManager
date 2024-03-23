@@ -1,7 +1,5 @@
 package com.aleandro.financial.exceptions.handler;
 
-import java.lang.reflect.Method;
-
 import java.util.Date;
 
 import org.springframework.http.HttpStatus;

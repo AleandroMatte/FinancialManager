@@ -8,6 +8,8 @@ public class UnsupportedPathVariable extends RuntimeException {
 
 
 
+	private static final long serialVersionUID = 1L;
+
 	public UnsupportedPathVariable(String message) {
 		super(message);
 	}
