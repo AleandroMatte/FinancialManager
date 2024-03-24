@@ -15,6 +15,7 @@
 	<description>training Spring</description>
 	<properties>
 		<java.version>17</java.version>
+		<dozer.version>7.0.0</dozer.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -46,6 +47,16 @@
     <groupId>org.springframework.data</groupId>
     <artifactId>spring-data-jpa</artifactId>
 	</dependency>
+	
+	<dependency>
+    <groupId>com.github.dozermapper</groupId>
+    <artifactId>dozer-core</artifactId>
+    <version>${dozer.version}</version>
+</dependency>
+        <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </dependency>  
 	</dependencies>
 
 	<build>
