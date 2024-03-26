@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aleandro.financial.DTO.DozerMapper;
+import com.aleandro.financial.DTO.UserDto;
 import com.aleandro.financial.Repository.UserRepository;
 import com.aleandro.financial.models.User;
 
@@ -21,29 +23,31 @@ public class UserServices {
 
 	}
 	
-	public User findById(Long id) {
+	public UserDto findById(Long id) {
 		logger.info("finding_by_id");
-		
-		return user_repository.findById(id).orElseThrow();
+		User user = user_repository.findById(id).orElseThrow();
+		UserDto parsed_user = DozerMapper.parseObject(user, UserDto.class);
+		return parsed_user;
 		
 	}
 	
-	public List<User> get_all_users() {
+	public List<UserDto> get_all_users() {
 		logger.info("finding_all_users");
-		List<User> users =  (List<User>)user_repository.findAll();
-		return users;
+		return DozerMapper.parseListObjects(user_repository.findAll(), UserDto.class);
+	
 	}
 	
-	public void create_user(User user)  {
+	public void create_user(UserDto user)  {
 		logger.info("creating user");
-		user_repository.save(user);
+		user_repository.save(DozerMapper.parseObject(user, User.class));
 		logger.info("User "+ user.getName()+ " created");
 	}
 	
-	public List<User> create_many_users(List<User> users)  {
+	public List<UserDto> create_many_users(List<UserDto> users)  {
 		logger.info("creating user");
-		List<User> created_users = user_repository.saveAll(users);
-		return created_users;
+		List<User> user_entities = DozerMapper.parseListObjects(users, User.class);
+		user_repository.saveAll(user_entities);
+		return users;
 
 	}
 	
