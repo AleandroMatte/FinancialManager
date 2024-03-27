@@ -12,10 +12,9 @@ import com.aleandro.financial.Repository.UserRepository;
 import com.aleandro.financial.models.User;
 
 @Service
-public class UserServices {
+public class UserServices extends BaseService {
 	
-	private Logger logger = Logger.getLogger(UserServices.class.getName());
-	
+
 	@Autowired
 	private UserRepository user_repository;
 

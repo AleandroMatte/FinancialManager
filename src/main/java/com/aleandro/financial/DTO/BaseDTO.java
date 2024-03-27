@@ -2,14 +2,15 @@ package com.aleandro.financial.DTO;
 
 import java.sql.Timestamp;
 
-
-public abstract class BaseDTO {
+public abstract class BaseDto {
 	
-	protected long id;
+
+	protected Long id;
+	
 	protected Timestamp created_at =  new Timestamp(System.currentTimeMillis());
 	protected Timestamp updated_at = new Timestamp(System.currentTimeMillis());
 
-	public BaseDTO() {
+	public BaseDto() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -17,7 +18,7 @@ public abstract class BaseDTO {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

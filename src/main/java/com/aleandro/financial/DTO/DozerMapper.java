@@ -3,6 +3,7 @@ package com.aleandro.financial.DTO;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aleandro.financial.models.Dividas;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 
@@ -18,10 +19,12 @@ public class DozerMapper {
 	public static <O , D> List<D> parseListObjects(List<O> origin_objects, Class<D> destiny) {
 		List<D> destiny_objects = new ArrayList<D>();
 		for (O origin_object  : origin_objects ) {
-			destiny_objects.add(mapper.map(origin_object, destiny));
+			destiny_objects.add(parseObject(origin_object, destiny));
 		}
 		return destiny_objects;	
 	}
+	
+	
 	
 
 }

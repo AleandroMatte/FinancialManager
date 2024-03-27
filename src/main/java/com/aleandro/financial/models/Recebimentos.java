@@ -27,6 +27,18 @@ public class Recebimentos extends BaseModel {
 	
 	@Column(name="data_recebimento")
 	private Date data_recebimento;
+	
+	@ManyToOne
+	@JoinColumn(name = "fk_user_id", referencedColumnName = "id")
+	private User user_id;
+
+	public User getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(User user_id) {
+		this.user_id = user_id;
+	}
 
 	public Boolean getRecebida() {
 		return recebida;

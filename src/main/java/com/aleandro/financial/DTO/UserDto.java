@@ -1,6 +1,7 @@
 package com.aleandro.financial.DTO;
 
-public class UserDto extends BaseDTO{
+
+public class UserDto extends BaseDto{
 
 		private String name;
 		private String email;

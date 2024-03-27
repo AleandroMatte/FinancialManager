@@ -36,13 +36,14 @@ public class UserController {
 	}
 	
 	@GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<UserDto> get_all_users() {
-		return user_service.get_all_users();
+	public ResponseEntity<List<UserDto>> get_all_users() {
+		return ResponseEntity.ok(user_service.get_all_users());
 			
 		}
-	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void add_user(@RequestBody  UserDto user) {
+	@PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> add_user(@RequestBody  UserDto user) {
 		user_service.create_user(user);
+		return ResponseEntity.ok().build();
 		
 	}
 	
@@ -53,7 +54,7 @@ public class UserController {
 		return ResponseEntity.ok(created_users);
 	}
 	
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> remove_user_by_id(@PathVariable Long id) {
 		user_service.delete_user(id);
 		return ResponseEntity.noContent().build();
