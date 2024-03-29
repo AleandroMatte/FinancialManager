@@ -12,7 +12,7 @@ public class DebtDto  extends BaseDto{
 	private Double valor;
 	private String destino;
 	private Boolean paga;
-	private Long recorrencia;
+	private TipoDividas recorrencia;
 	private Date data_pagamento;
 
 	public DebtDto() {
@@ -44,13 +44,10 @@ public class DebtDto  extends BaseDto{
 	}
 
 	@Mapping(value = "tipo_dividas_id")
-	public Long getRecorrencia() {
+	public TipoDividas getRecorrencia() {
 		return recorrencia;
 	}
 
-	public void setRecorrencia(Long recorrencia) {
-		this.recorrencia = recorrencia;
-	}
 
 	public Date getData_pagamento() {
 		return data_pagamento;
@@ -67,6 +64,11 @@ public class DebtDto  extends BaseDto{
 
 	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
+	}
+
+	public void setRecorrencia(TipoDividas recorrencia) {
+		this.recorrencia = recorrencia;
+		
 	}
 
 
