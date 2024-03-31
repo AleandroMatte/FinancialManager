@@ -12,12 +12,36 @@ public class DebtDto  extends BaseDto{
 	private Double valor;
 	private String destino;
 	private Boolean paga;
-	private TipoDividas recorrencia;
+	private Long recorrencia_id;
 	private Date data_pagamento;
 
 	public DebtDto() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+
+	@Override
+	public String toString() {
+		return "DebtDto [user_id=" + user_id + ", valor=" + valor + ", destino=" + destino + ", paga=" + paga
+				+ ", recorrencia_id=" + recorrencia_id + ", data_pagamento=" + data_pagamento + "]";
+	}
+
+
+
+
+	public Long getRecorrencia_id() {
+		return recorrencia_id;
+	}
+
+
+
+	public void setRecorrencia_id(Long recorrencia_id) {
+		this.recorrencia_id = recorrencia_id;
+	}
+
+
 
 	public Double getValor() {
 		return valor;
@@ -43,11 +67,6 @@ public class DebtDto  extends BaseDto{
 		this.paga = paga;
 	}
 
-	@Mapping(value = "tipo_dividas_id")
-	public TipoDividas getRecorrencia() {
-		return recorrencia;
-	}
-
 
 	public Date getData_pagamento() {
 		return data_pagamento;
@@ -66,10 +85,7 @@ public class DebtDto  extends BaseDto{
 		this.user_id = user_id;
 	}
 
-	public void setRecorrencia(TipoDividas recorrencia) {
-		this.recorrencia = recorrencia;
-		
-	}
+	
 
 
 		// TODO Auto-generated method stub

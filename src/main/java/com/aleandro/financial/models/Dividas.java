@@ -33,6 +33,15 @@ public class Dividas extends BaseModel {
 	private User user_id;
 	
 	
+	
+	
+
+	@Override
+	public String toString() {
+		return "Dividas [valor=" + valor + ", destino=" + destino + ", paga=" + paga + ", recorrencia=" + recorrencia
+				+ ", data_pagamento=" + data_pagamento + ", user_id=" + user_id + "]";
+	}
+
 
 	public User getUser_id() {
 		return user_id;

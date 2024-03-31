@@ -1,5 +1,7 @@
 package com.aleandro.financial.Repository;
 
-public interface DebtRepository {
+import com.aleandro.financial.models.Dividas;
+
+public interface DebtRepository  extends BaseInterface<Dividas>{
 
 }
