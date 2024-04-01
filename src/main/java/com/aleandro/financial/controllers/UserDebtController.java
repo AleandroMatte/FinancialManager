@@ -1,5 +1,7 @@
 package com.aleandro.financial.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aleandro.financial.DTO.DebtDto;
 import com.aleandro.financial.exceptions.DataNotFoundException;
 import com.aleandro.financial.services.DebtService;
-import com.aleandro.financial.services.UserServices;
 
 
 @RestController
@@ -36,9 +37,11 @@ public class UserDebtController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllUserDebts(@PathVariable Long user_id) {
-		return ResponseEntity.ok().build();
+		
+		List<DebtDto> user_debts =  debt_service.get_user_debts(user_id);
+		return ResponseEntity.ok(user_debts);
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

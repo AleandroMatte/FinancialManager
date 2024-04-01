@@ -1,14 +1,13 @@
 package com.aleandro.financial.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.aleandro.financial.DTO.DebtMapper;
 import com.aleandro.financial.DTO.DebtDto;
+import com.aleandro.financial.DTO.DebtMapper;
 import com.aleandro.financial.Repository.DebtRepository;
 import com.aleandro.financial.Repository.TypeDebtRepository;
 import com.aleandro.financial.Repository.UserRepository;
@@ -48,7 +47,13 @@ public class DebtService extends BaseService {
 		Dividas debt = debt_mapper.ParseVoToDebtEntity(data);
 		System.out.println(debt.toString());
 		debt_repository.save(debt);
+	}
+	
+	public List<DebtDto> get_user_debts(Long user_id){
+		List<Dividas> user_debts = debt_repository.CustomfindByUser_id(user_id);
+		List<DebtDto> user_debts_vo = debt_mapper.ParseListDebtsToVo(user_debts);
 		
+		return user_debts_vo;
 	}
 	
 	

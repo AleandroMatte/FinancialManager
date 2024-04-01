@@ -2,10 +2,10 @@ package com.aleandro.financial.DTO;
 
 import java.util.Date;
 
-import com.aleandro.financial.models.TipoDividas;
-import com.aleandro.financial.models.User;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
+@JsonPropertyOrder({"valor", "destino", "paga","user_id","data_pagamento"})
 public class DebtDto  extends BaseDto{
 	
 	private Long user_id;

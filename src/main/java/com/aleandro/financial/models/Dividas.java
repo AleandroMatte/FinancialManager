@@ -29,7 +29,7 @@ public class Dividas extends BaseModel {
 	private Date data_pagamento;
 
 	@ManyToOne
-	@JoinColumn(name = "fk_user_id", referencedColumnName = "id")
+	@JoinColumn(name = "fk_user_id", referencedColumnName = "id", nullable = false)
 	private User user_id;
 	
 	
