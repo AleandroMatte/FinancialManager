@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aleandro.financial.DTO.UserDto;
-import com.aleandro.financial.models.User;
 import com.aleandro.financial.services.UserServices;
 
 @RestController

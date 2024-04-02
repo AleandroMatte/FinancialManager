@@ -34,7 +34,8 @@ public class UserDebtController {
 	
 	@GetMapping("/{debt_id}")
 	public ResponseEntity<?> getDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
-		return ResponseEntity.ok().build();
+		DebtDto debt = debt_service.get_debt_by_id(user_id,debt_id);
+		return ResponseEntity.ok(debt);
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,12 +59,19 @@ public class UserDebtController {
 		}
 		return ResponseEntity.ok().build();
 	}
+	
 	@DeleteMapping("/{debt_id}")
 	public ResponseEntity<?> deleteDebtById(@PathVariable Long user_id) {
 		return ResponseEntity.ok().build();
 	}
-	@PutMapping("/{debt_id}")
-	public ResponseEntity<?> getMethodName(@PathVariable Long user_id) {
+	@PutMapping("{debt_id}")
+	public ResponseEntity<?> getMethodName(@PathVariable Long user_id,
+										   @PathVariable Long debt_id,
+										   @RequestBody DebtDto debt_data) {
+		debt_data.setUser_id(user_id);
+		debt_data.setId(debt_id);
+		System.out.println(debt_data);
+		debt_service.update_user_debts(debt_data);
 		return ResponseEntity.ok().build();
 	}
 	

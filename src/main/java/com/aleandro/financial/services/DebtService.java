@@ -49,6 +49,13 @@ public class DebtService extends BaseService {
 		debt_repository.save(debt);
 	}
 	
+	public DebtDto get_debt_by_id(Long user_id, Long debt_id) {
+		Optional<Dividas> debt = debt_repository.CustomfindByUser_idAndDebt_id(user_id,debt_id);
+		if (debt.isEmpty()) {throw new DataNotFoundException("debt not found!");}
+		DebtDto debt_vo = debt_mapper.ParseDebtToVo(debt.get());
+		return debt_vo;
+	}
+	
 	public List<DebtDto> get_user_debts(Long user_id){
 		List<Dividas> user_debts = debt_repository.CustomfindByUser_id(user_id);
 		List<DebtDto> user_debts_vo = debt_mapper.ParseListDebtsToVo(user_debts);
@@ -56,8 +63,26 @@ public class DebtService extends BaseService {
 		return user_debts_vo;
 	}
 	
+	public void update_user_debts(DebtDto new_user_debt_data){
+		Optional<Dividas> debt = debt_repository.CustomfindByUser_idAndDebt_id(new_user_debt_data.getUser_id(),
+				new_user_debt_data.getId());
+		if (debt.isEmpty()) {
+			throw new DataNotFoundException("debt not found!");
+		}
+		debt_repository.UpdateDebtByDto(new_user_debt_data.getId(),
+										new_user_debt_data.getValor(),
+										new_user_debt_data.getDestino(),
+										new_user_debt_data.getUser_id(),
+										new_user_debt_data.getData_pagamento(),
+										new_user_debt_data.getUser_id(),
+										new_user_debt_data.getPaga());
+		
+		}
+		
+	}
+	
 	
 
 		
 
-}
+

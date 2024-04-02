@@ -1,6 +1,7 @@
 package com.aleandro.financial.DTO;
 
 import java.util.Date;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;

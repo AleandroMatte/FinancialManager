@@ -1,7 +1,6 @@
 package com.aleandro.financial.services;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

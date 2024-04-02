@@ -3,7 +3,6 @@ package com.aleandro.financial.DTO;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aleandro.financial.models.Dividas;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 
