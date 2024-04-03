@@ -2,20 +2,18 @@ package com.aleandro.financial.DTO;
 
 import java.util.Date;
 
-import com.aleandro.financial.models.TipoRecebimento;
-import com.aleandro.financial.models.User;
 import com.github.dozermapper.core.Mapping;
 
-public class RecebimentosDto {
+public class WinningsDto extends BaseDto {
 
 	private Double valor;
 	private String origem;
 	private Boolean recebida;
-	private TipoRecebimento recorrencia;
+	private Long recorrencia_id;
 	private Date data_recebimento;
-	private User user_id;
+	private Long user_id;
 	
-	public RecebimentosDto() {
+	public WinningsDto() {
 		// TODO Auto-generated constructor stub
 	}
 	public Double getValor() {
@@ -40,11 +38,11 @@ public class RecebimentosDto {
 	public void setRecebida(Boolean recebida) {
 		this.recebida = recebida;
 	}
-	public TipoRecebimento getRecorrencia() {
-		return recorrencia;
+	public Long getRecorrencia() {
+		return recorrencia_id;
 	}
-	public void setRecorrencia(TipoRecebimento recorrencia) {
-		this.recorrencia = recorrencia;
+	public void setRecorrencia(Long recorrencia) {
+		this.recorrencia_id = recorrencia;
 	}
 	public Date getData_recebimento() {
 		return data_recebimento;
@@ -53,11 +51,11 @@ public class RecebimentosDto {
 		this.data_recebimento = data_recebimento;
 	}
 	@Mapping(value = "user_id")
-	public User getUser_id() {
+	public Long getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(User user_id) {
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
 }

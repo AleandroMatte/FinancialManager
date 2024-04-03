@@ -1,6 +1,5 @@
 package com.aleandro.financial.controllers;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,60 +14,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aleandro.financial.DTO.DebtDto;
-import com.aleandro.financial.exceptions.DataNotFoundException;
 import com.aleandro.financial.services.DebtService;
 
-
 @RestController
-@RequestMapping("/user/{user_id}/debt")
-public class UserDebtController {
+@RequestMapping("/user/{user_id}/wins")
+public class UserWinningsController {
 
-	
-	public UserDebtController() {
+	public UserWinningsController() {
 		// TODO Auto-generated constructor stub
 	}
 	
-
 	@Autowired
 	private DebtService debt_service;
 	
-	@GetMapping("/{debt_id}")
-	public ResponseEntity<?> getDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
-		DebtDto debt = debt_service.get_debt_by_id(user_id,debt_id);
-		return ResponseEntity.ok(debt);
-	}
-	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getAllUserDebts(@PathVariable Long user_id) {
-		
-		List<DebtDto> user_debts =  debt_service.get_user_debts(user_id);
-		return ResponseEntity.ok(user_debts);
-	}
-	
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> postUserDebt(@PathVariable Long user_id, @RequestBody DebtDto debt_data) {
-		try {
-			debt_data.setUser_id(user_id);
-			debt_service.post_debt(debt_data);	
-			
-		} catch (DataNotFoundException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	@GetMapping("/{win_id}")
+	public ResponseEntity<?> getWinById(@PathVariable Long user_id, @PathVariable Long win_id) {
+
 		return ResponseEntity.ok().build();
 	}
 	
-	@DeleteMapping("/{debt_id}")
-	public ResponseEntity<?> deleteDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
-		debt_service.delete_debt_by_id(user_id,debt_id);
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getAllUserWins(@PathVariable Long user_id) {
+		
+
+		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public <T> ResponseEntity<?> postUserWin(@PathVariable Long user_id, @RequestBody T debt_data) {
+
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/{win_id}")
+	public ResponseEntity<?> deleteWinById(@PathVariable Long user_id, @PathVariable Long debt_id) {
 		
 		return ResponseEntity.status(201).build();
 	}
 	
-	@PutMapping("{debt_id}")
-	public ResponseEntity<?> updateDebt(@PathVariable Long user_id,
+	@PutMapping("{win_id}")
+	public ResponseEntity<?>  updateWin(@PathVariable Long user_id,
 										   @PathVariable Long debt_id,
 										   @RequestBody DebtDto debt_data) {
 		debt_data.setUser_id(user_id);
@@ -77,8 +62,5 @@ public class UserDebtController {
 		debt_service.update_user_debts(debt_data);
 		return ResponseEntity.ok().build();
 	}
-	
-
-	
 
 }

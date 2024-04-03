@@ -6,14 +6,14 @@ import jakarta.persistence.Table;
 
 @Entity(name = "tipo_recebimento")
 @Table(name = "tipo_recebimento")
-public class TipoRecebimento extends BaseModel {
+public class TypeWinning extends BaseModel {
 	
 	@Column(name = "recorrência", nullable = false)
 	private String recorrencia;
 	
 	
 
-	public TipoRecebimento() {
+	public TypeWinning() {
 		// TODO Auto-generated constructor stub
 	}
 

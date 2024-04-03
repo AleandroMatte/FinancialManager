@@ -5,65 +5,62 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.aleandro.financial.Repository.TypeDebtRepository;
+import com.aleandro.financial.Repository.TypeWinRepository;
 import com.aleandro.financial.Repository.UserRepository;
-import com.aleandro.financial.models.Debt;
-import com.aleandro.financial.models.TypeDebt;
+import com.aleandro.financial.models.TypeWinning;
 import com.aleandro.financial.models.User;
+import com.aleandro.financial.models.Winnings;
 import com.github.dozermapper.core.MappingException;
 
-@Component
-public class DebtMapper {
-	
+public class WinMapper {
+
+	public WinMapper() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Autowired
 	private UserRepository user_repo;
 	@Autowired
-	private TypeDebtRepository type_debt_repo;
-	
-	public DebtMapper() {
-	}
+	private TypeWinRepository type_win_repo;
 	
 
 
 
-
-
-	public List<DebtDto> ParseListDebtsToVo(List<Debt> list_dividas){
-		List<DebtDto> lista_vo_objects = new ArrayList<>();
-		for (Debt dividas : list_dividas) {
-			lista_vo_objects.add(ParseDebtToVo(dividas));
+	public List<WinningsDto> ParseListDebtsToVo(List<Winnings> lista_recebimentos){
+		List<WinningsDto> lista_vo_objects = new ArrayList<>();
+		for (Winnings recebimentos : lista_recebimentos) {
+			lista_vo_objects.add(ParseWinToVo(recebimentos));
 		}
 		return lista_vo_objects;
 	}
 
-	public  DebtDto ParseDebtToVo(Debt origin_object) {
-		DebtDto novo_Vo = new DebtDto();
+	public  WinningsDto ParseWinToVo(Winnings origin_object) {
+		WinningsDto novo_Vo = new WinningsDto();
 		novo_Vo.setId(origin_object.getId());
-		novo_Vo.setPaga(origin_object.getPaga());
-		novo_Vo.setDestino(origin_object.getDestino());
+		novo_Vo.setRecebida(origin_object.getRecebida());
+		novo_Vo.setOrigem(origin_object.getOrigem());
 		novo_Vo.setUpdated_at(origin_object.getUpdated_at());
 		novo_Vo.setCreated_at(origin_object.getCreated_at());
 		novo_Vo.setValor(origin_object.getValor());
-		novo_Vo.setData_pagamento(origin_object.getData_pagamento());
+		novo_Vo.setData_recebimento(origin_object.getData_recebimento());
 		
 		if(origin_object.getUser_id().getId() == null) {
 			throw new MappingException("Debts must be assigned to a user");
 		}
 		Long user_id = origin_object.getUser_id().getId();
 		novo_Vo.setUser_id(user_id);
-		novo_Vo.setRecorrencia_id(origin_object.getRecorrencia().getId());
+		novo_Vo.setRecorrencia(origin_object.getRecorrencia().getId());
 		return novo_Vo;
 	}
 	
 	
-	public  Debt ParseVoToDebtEntity(DebtDto origin_object) {
-		Debt novo_Vo = new Debt();
+	public  Winnings ParseVoToWinEntity(WinningsDto origin_object) {
+		Winnings novo_Vo = new Winnings();
 		System.out.println(origin_object.toString());
-		novo_Vo.setDestino(origin_object.getDestino());
-		novo_Vo.setPaga(origin_object.getPaga());
-		novo_Vo.setData_pagamento(origin_object.getData_pagamento());
+		novo_Vo.setOrigem(origin_object.getOrigem());
+		novo_Vo.setRecebida(origin_object.getRecebida());
+		novo_Vo.setData_recebimento(origin_object.getData_recebimento());
 		novo_Vo.setValor(origin_object.getValor());
 		if(origin_object.getUser_id() == null) {
 			throw new MappingException("Debts must be assigned to a user");
@@ -73,23 +70,15 @@ public class DebtMapper {
 			novo_Vo.setUser_id(user.get());
 		}
 		
-		if(origin_object.getRecorrencia_id() == null) {
+		if(origin_object.getRecorrencia() == null) {
 			throw new MappingException("Debts must have a type");
 		}
-		Optional<TypeDebt> tipo_divida = type_debt_repo.findById(origin_object.getRecorrencia_id());
+		Optional<TypeWinning> tipo_divida = type_win_repo.findById(origin_object.getRecorrencia());
 		if(tipo_divida.isPresent()) {
 			novo_Vo.setRecorrencia(tipo_divida.get());
 			
 		}
-		
 		return novo_Vo;
 	}
-
-	
-
-	
-	
-	
-
 	
 }

@@ -14,7 +14,7 @@ public abstract class BaseDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

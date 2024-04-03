@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity(name = "recebimentos")
 @Table(name = "recebimentos")
-public class Recebimentos extends BaseModel {
+public class Winnings extends BaseModel {
 	
 	@Column(name = "valor", nullable = false)
 	private Double valor;
@@ -23,7 +23,7 @@ public class Recebimentos extends BaseModel {
 	
 	@ManyToOne
 	@JoinColumn(name = "tipo_recebimento_id", referencedColumnName = "id")
-	private TipoRecebimento recorrencia;
+	private TypeWinning recorrencia;
 	
 	@Column(name="data_recebimento")
 	private Date data_recebimento;
@@ -48,15 +48,15 @@ public class Recebimentos extends BaseModel {
 		this.recebida = recebida;
 	}
 
-	public TipoRecebimento getRecorrencia() {
+	public TypeWinning getRecorrencia() {
 		return recorrencia;
 	}
 
-	public void setRecorrencia(TipoRecebimento recorrencia) {
+	public void setRecorrencia(TypeWinning recorrencia) {
 		this.recorrencia = recorrencia;
 	}
 
-	public Recebimentos() {
+	public Winnings() {
 		// TODO Auto-generated constructor stub
 	}
 

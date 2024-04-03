@@ -6,12 +6,12 @@ import jakarta.persistence.Table;
 
 @Entity(name = "tipo_dividas")
 @Table(name = "tipo_dividas")
-public class TipoDividas extends BaseModel {
+public class TypeDebt extends BaseModel {
 	
 	@Column(name = "tipo_divida", nullable = false)
 	private String tipoDivida;
 
-	public TipoDividas() {
+	public TypeDebt() {
 		// TODO Auto-generated constructor stub
 	}
 
