@@ -17,7 +17,7 @@ public interface WinningRepository extends BaseInterface<Winnings> {
 	@Query(value = "select * from recebimentos where recebimentos.fk_user_id = ?1", nativeQuery = true)
 	List<Winnings> CustomfindByUser_id(Long user_id);
 	
-	@Query(value = "select * from dividas where recebimentos.fk_user_id = ?1 and "
+	@Query(value = "select * from recebimentos where recebimentos.fk_user_id = ?1 and "
 			+ "recebimentos.id = ?2", nativeQuery = true)
 	Optional<Winnings>CustomfindByUser_idAndDebt_id(Long user_id,Long win_id);
 	

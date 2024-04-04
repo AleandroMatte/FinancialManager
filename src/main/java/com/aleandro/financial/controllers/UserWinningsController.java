@@ -1,6 +1,8 @@
 package com.aleandro.financial.controllers;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aleandro.financial.DTO.DebtDto;
-import com.aleandro.financial.services.DebtService;
+import com.aleandro.financial.DTO.WinningsDto;
+import com.aleandro.financial.services.WinService;
 
 @RestController
 @RequestMapping("/user/{user_id}/wins")
@@ -25,41 +27,44 @@ public class UserWinningsController {
 	}
 	
 	@Autowired
-	private DebtService debt_service;
+	private WinService win_service;
 	
-	@GetMapping("/{win_id}")
+	@GetMapping(path = "/{win_id}",
+				produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getWinById(@PathVariable Long user_id, @PathVariable Long win_id) {
-
-		return ResponseEntity.ok().build();
+		WinningsDto win_data =  win_service.get_win_by_id(user_id, win_id);
+		return ResponseEntity.ok(win_data);
 	}
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllUserWins(@PathVariable Long user_id) {
-		
-
-		return ResponseEntity.ok().build();
+		List<WinningsDto> user_wins = win_service.get_user_wins(user_id);
+		return ResponseEntity.ok(user_wins);
 	}
 	
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public <T> ResponseEntity<?> postUserWin(@PathVariable Long user_id, @RequestBody T debt_data) {
-
-		return ResponseEntity.ok().build();
+	@PostMapping(path = "" , consumes = MediaType.APPLICATION_JSON_VALUE)
+	public <T> ResponseEntity<?> postUserWin(@PathVariable Long user_id, @RequestBody WinningsDto win_data) {
+		win_data.setUser_id(user_id);
+		win_service.post_win(win_data);
+		return ResponseEntity.created(null).build();
 	}
 	
 	@DeleteMapping("/{win_id}")
-	public ResponseEntity<?> deleteWinById(@PathVariable Long user_id, @PathVariable Long debt_id) {
-		
+	public ResponseEntity<?> deleteWinById(@PathVariable Long user_id, @PathVariable Long win_id) {
+		win_service.delete_debt_by_id(user_id, win_id);
 		return ResponseEntity.status(201).build();
 	}
 	
-	@PutMapping("{win_id}")
+	@PutMapping(path = "/{win_id}",
+				produces = MediaType.APPLICATION_JSON_VALUE,
+				consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?>  updateWin(@PathVariable Long user_id,
-										   @PathVariable Long debt_id,
-										   @RequestBody DebtDto debt_data) {
-		debt_data.setUser_id(user_id);
-		debt_data.setId(debt_id);
-		System.out.println(debt_data);
-		debt_service.update_user_debts(debt_data);
+										   @PathVariable Long win_id,
+										   @RequestBody WinningsDto win_data) {
+		win_data.setId(win_id);
+		win_data.setUser_id(user_id);
+		win_service.update_user_win(win_data);
+
 		return ResponseEntity.ok().build();
 	}
 

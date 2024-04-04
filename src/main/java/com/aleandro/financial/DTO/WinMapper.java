@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.aleandro.financial.Repository.TypeWinRepository;
 import com.aleandro.financial.Repository.UserRepository;
@@ -13,6 +14,7 @@ import com.aleandro.financial.models.User;
 import com.aleandro.financial.models.Winnings;
 import com.github.dozermapper.core.MappingException;
 
+@Component
 public class WinMapper {
 
 	public WinMapper() {
@@ -73,9 +75,9 @@ public class WinMapper {
 		if(origin_object.getRecorrencia() == null) {
 			throw new MappingException("Debts must have a type");
 		}
-		Optional<TypeWinning> tipo_divida = type_win_repo.findById(origin_object.getRecorrencia());
-		if(tipo_divida.isPresent()) {
-			novo_Vo.setRecorrencia(tipo_divida.get());
+		Optional<TypeWinning> tipo_win = type_win_repo.findById(origin_object.getRecorrencia());
+		if(tipo_win.isPresent()) {
+			novo_Vo.setRecorrencia(tipo_win.get());
 			
 		}
 		return novo_Vo;
