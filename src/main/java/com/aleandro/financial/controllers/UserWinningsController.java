@@ -30,19 +30,19 @@ public class UserWinningsController {
 	private WinService win_service;
 	
 	@GetMapping(path = "/{win_id}",
-				produces = MediaType.APPLICATION_JSON_VALUE)
+				produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<?> getWinById(@PathVariable Long user_id, @PathVariable Long win_id) {
 		WinningsDto win_data =  win_service.get_win_by_id(user_id, win_id);
 		return ResponseEntity.ok(win_data);
 	}
 	
-	@GetMapping(path = "",produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<?> getAllUserWins(@PathVariable Long user_id) {
 		List<WinningsDto> user_wins = win_service.get_user_wins(user_id);
 		return ResponseEntity.ok(user_wins);
 	}
 	
-	@PostMapping(path = "" , consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "" , consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public <T> ResponseEntity<?> postUserWin(@PathVariable Long user_id, @RequestBody WinningsDto win_data) {
 		win_data.setUser_id(user_id);
 		win_service.post_win(win_data);
@@ -56,8 +56,8 @@ public class UserWinningsController {
 	}
 	
 	@PutMapping(path = "/{win_id}",
-				produces = MediaType.APPLICATION_JSON_VALUE,
-				consumes = MediaType.APPLICATION_JSON_VALUE)
+				produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
+				consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<?>  updateWin(@PathVariable Long user_id,
 										   @PathVariable Long win_id,
 										   @RequestBody WinningsDto win_data) {
