@@ -13,9 +13,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.aleandro.financial.DTO.DozerMapper;
-import com.aleandro.financial.DTO.UserDto;
-import com.aleandro.financial.models.User;
+import com.aleandro.financial.User.infra.UserDto;
+import com.aleandro.financial.User.models.User;
+import com.aleandro.financial.shared.infra.DozerMapper;
 
 
 

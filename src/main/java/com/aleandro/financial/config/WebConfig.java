@@ -9,12 +9,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer   {
 
 	public WebConfig(){
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		// TODO Auto-generated method stub
 		configurer.favorParameter(true)
 		.parameterName("mediaType")
 		.ignoreAcceptHeader(true)
