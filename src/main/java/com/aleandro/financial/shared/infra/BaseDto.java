@@ -2,7 +2,10 @@ package com.aleandro.financial.shared.infra;
 
 import java.sql.Timestamp;
 
-public abstract class BaseDto {
+import org.springframework.hateoas.RepresentationModel;
+
+public abstract class BaseDto extends RepresentationModel<BaseDto> {
+	
 	
 
 	protected Long id;
