@@ -1,9 +1,5 @@
 package com.aleandro.financial.UserDebt.controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aleandro.financial.User.controllers.UserController;
-import com.aleandro.financial.User.infra.UserDto;
 import com.aleandro.financial.UserDebt.DTO.DebtDto;
 import com.aleandro.financial.UserDebt.service.DebtService;
 import com.aleandro.financial.exceptions.DataNotFoundException;
@@ -41,15 +35,12 @@ public class UserDebtController {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{debt_id}")
 	public ResponseEntity<?> getDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
 		DebtDto debt = debt_service.get_debt_by_id(user_id,debt_id);
-		DebtDto debt_with_self_links = addSelfLinks(debt);
-		return ResponseEntity.ok(debt_with_self_links);
+		return ResponseEntity.ok(debt);
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllUserDebts(@PathVariable Long user_id) {
-		List<DebtDto> user_debts_with_added_links = new ArrayList<>();
-		List<DebtDto> user_debts =  debt_service.get_user_debts(user_id);
-		user_debts.forEach(x -> user_debts_with_added_links.add(addSelfLinks(x)));
+		List<DebtDto> user_debts_with_added_links = debt_service.get_user_debts(user_id);
 		return ResponseEntity.ok(user_debts_with_added_links);
 	}
 	
@@ -87,11 +78,7 @@ public class UserDebtController {
 	}
 	
 	
-	private DebtDto addSelfLinks(DebtDto debt) {
-		debt = (DebtDto) debt.add(linkTo(methodOn(UserDebtController.class).getDebtById(debt.getUser_id(),debt.getId())).withSelfRel().withName("Actions"));
-		return debt;
-	}
-	
+
 	
 
 	

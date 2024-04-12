@@ -1,5 +1,9 @@
 package com.aleandro.financial.UserWin.services;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.aleandro.financial.User.Repository.UserRepository;
 import com.aleandro.financial.User.models.User;
+import com.aleandro.financial.UserDebt.controller.UserDebtController;
 import com.aleandro.financial.UserWin.Model.TypeWinning;
 import com.aleandro.financial.UserWin.Model.Winnings;
 import com.aleandro.financial.UserWin.infra.WinMapper;
@@ -50,16 +55,21 @@ public class WinService {
 	
 	public WinningsDto get_win_by_id(Long user_id, Long debt_id) {
 		Optional<Winnings> win = win_repository.CustomfindByUser_idAndDebt_id(user_id,debt_id);
+		
+		
 		if (win.isEmpty()) {throw new DataNotFoundException("debt not found!");}
 		WinningsDto win_vo = win_mapper.ParseWinToVo(win.get());
-		return win_vo;
+		WinningsDto wins_with_link = addSelfLinks(win_vo);
+		return wins_with_link;
 	}
 	
 	public List<WinningsDto> get_user_wins(Long user_id){
 		List<Winnings> user_wins = win_repository.CustomfindByUser_id(user_id);
 		List<WinningsDto> user_wins_vo = win_mapper.ParseListDebtsToVo(user_wins);
+		List<WinningsDto> user_wins_with_links = new ArrayList<>();
+		user_wins_vo.forEach(x ->user_wins_with_links.add(addSelfLinks(x)));
 		
-		return user_wins_vo;
+		return user_wins_with_links;
 	}
 	
 	public void update_user_win(WinningsDto new_win_data){
@@ -82,5 +92,13 @@ public class WinService {
 		win_repository.CustomDeleteByIds(user_id,debt_id);
 		
 	}
+	
+	
+	
+	private WinningsDto addSelfLinks(WinningsDto win) {
+		win = (WinningsDto) win.add(linkTo(methodOn(UserDebtController.class).getDebtById(win.getUser_id(),win.getId())).withSelfRel().withName("Actions"));
+		return win;
+	}
+	
 
 }

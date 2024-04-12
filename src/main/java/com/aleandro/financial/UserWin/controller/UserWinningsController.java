@@ -44,10 +44,8 @@ public class UserWinningsController {
 	
 	@GetMapping(path = "",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<?> getAllUserWins(@PathVariable Long user_id) {
-		List<WinningsDto> user_wins_with_links = new ArrayList<>();
-		List<WinningsDto> user_wins = win_service.get_user_wins(user_id);
-		user_wins.forEach(x ->user_wins_with_links.add(addSelfLinks(x)));
-		return ResponseEntity.ok(user_wins);
+		List<WinningsDto> user_wins_with_links = win_service.get_user_wins(user_id);
+		return ResponseEntity.ok(user_wins_with_links);
 	}
 	
 	@PostMapping(path = "" , consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
@@ -76,11 +74,6 @@ public class UserWinningsController {
 		return ResponseEntity.ok().build();
 	}
 	
-	
-	private WinningsDto addSelfLinks(WinningsDto win) {
-		win = (WinningsDto) win.add(linkTo(methodOn(UserDebtController.class).getDebtById(win.getUser_id(),win.getId())).withSelfRel().withName("Actions"));
-		return win;
-	}
-	
+
 
 }

@@ -1,5 +1,9 @@
 package com.aleandro.financial.UserDebt.service;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +14,7 @@ import com.aleandro.financial.User.Repository.UserRepository;
 import com.aleandro.financial.User.models.User;
 import com.aleandro.financial.UserDebt.DTO.DebtDto;
 import com.aleandro.financial.UserDebt.DTO.DebtMapper;
+import com.aleandro.financial.UserDebt.controller.UserDebtController;
 import com.aleandro.financial.UserDebt.model.Debt;
 import com.aleandro.financial.UserDebt.model.TypeDebt;
 import com.aleandro.financial.UserDebt.repository.DebtRepository;
@@ -54,14 +59,18 @@ public class DebtService extends BaseService {
 		Optional<Debt> debt = debt_repository.CustomfindByUser_idAndDebt_id(user_id,debt_id);
 		if (debt.isEmpty()) {throw new DataNotFoundException("debt not found!");}
 		DebtDto debt_vo = debt_mapper.ParseDebtToVo(debt.get());
-		return debt_vo;
+		DebtDto debt_with_self_links = addSelfLinks(debt_vo);
+		return debt_with_self_links;
 	}
 	
 	public List<DebtDto> get_user_debts(Long user_id){
 		List<Debt> user_debts = debt_repository.CustomfindByUser_id(user_id);
-		List<DebtDto> user_debts_vo = debt_mapper.ParseListDebtsToVo(user_debts);
 		
-		return user_debts_vo;
+		List<DebtDto> user_debts_vo = debt_mapper.ParseListDebtsToVo(user_debts);
+		List<DebtDto> user_debts_with_link =  new ArrayList<>();
+		user_debts_vo.forEach(x -> user_debts_with_link.add(addSelfLinks(x)));
+		
+		return user_debts_with_link;
 	}
 	
 	public void update_user_debts(DebtDto new_user_debt_data){
@@ -84,6 +93,12 @@ public class DebtService extends BaseService {
 		debt_repository.CustomDeleteByIds(user_id,debt_id);
 		
 	}
+	
+	private DebtDto addSelfLinks(DebtDto debt) {
+		debt = (DebtDto) debt.add(linkTo(methodOn(UserDebtController.class).getDebtById(debt.getUser_id(),debt.getId())).withSelfRel().withName("Actions"));
+		return debt;
+	}
+	
 	
 }
 	
