@@ -1,6 +1,10 @@
 package com.aleandro.financial.UserWin.controller;
 
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aleandro.financial.UserDebt.DTO.DebtDto;
+import com.aleandro.financial.UserDebt.controller.UserDebtController;
 import com.aleandro.financial.UserWin.infra.WinningsDto;
 import com.aleandro.financial.UserWin.services.WinService;
 
@@ -38,7 +44,9 @@ public class UserWinningsController {
 	
 	@GetMapping(path = "",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<?> getAllUserWins(@PathVariable Long user_id) {
+		List<WinningsDto> user_wins_with_links = new ArrayList<>();
 		List<WinningsDto> user_wins = win_service.get_user_wins(user_id);
+		user_wins.forEach(x ->user_wins_with_links.add(addSelfLinks(x)));
 		return ResponseEntity.ok(user_wins);
 	}
 	
@@ -67,5 +75,12 @@ public class UserWinningsController {
 
 		return ResponseEntity.ok().build();
 	}
+	
+	
+	private WinningsDto addSelfLinks(WinningsDto win) {
+		win = (WinningsDto) win.add(linkTo(methodOn(UserDebtController.class).getDebtById(win.getUser_id(),win.getId())).withSelfRel().withName("Actions"));
+		return win;
+	}
+	
 
 }

@@ -1,5 +1,9 @@
 package com.aleandro.financial.UserDebt.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aleandro.financial.User.controllers.UserController;
+import com.aleandro.financial.User.infra.UserDto;
 import com.aleandro.financial.UserDebt.DTO.DebtDto;
 import com.aleandro.financial.UserDebt.service.DebtService;
 import com.aleandro.financial.exceptions.DataNotFoundException;
@@ -32,17 +38,19 @@ public class UserDebtController {
 	@Autowired
 	private DebtService debt_service;
 	
-	@GetMapping("/{debt_id}")
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{debt_id}")
 	public ResponseEntity<?> getDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
 		DebtDto debt = debt_service.get_debt_by_id(user_id,debt_id);
-		return ResponseEntity.ok(debt);
+		DebtDto debt_with_self_links = addSelfLinks(debt);
+		return ResponseEntity.ok(debt_with_self_links);
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllUserDebts(@PathVariable Long user_id) {
-		
+		List<DebtDto> user_debts_with_added_links = new ArrayList<>();
 		List<DebtDto> user_debts =  debt_service.get_user_debts(user_id);
-		return ResponseEntity.ok(user_debts);
+		user_debts.forEach(x -> user_debts_with_added_links.add(addSelfLinks(x)));
+		return ResponseEntity.ok(user_debts_with_added_links);
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -67,7 +75,7 @@ public class UserDebtController {
 		return ResponseEntity.status(201).build();
 	}
 	
-	@PutMapping("{debt_id}")
+	@PutMapping( consumes = MediaType.APPLICATION_JSON_VALUE, path = "{debt_id}")
 	public ResponseEntity<?> updateDebt(@PathVariable Long user_id,
 										   @PathVariable Long debt_id,
 										   @RequestBody DebtDto debt_data) {
@@ -77,6 +85,13 @@ public class UserDebtController {
 		debt_service.update_user_debts(debt_data);
 		return ResponseEntity.ok().build();
 	}
+	
+	
+	private DebtDto addSelfLinks(DebtDto debt) {
+		debt = (DebtDto) debt.add(linkTo(methodOn(UserDebtController.class).getDebtById(debt.getUser_id(),debt.getId())).withSelfRel().withName("Actions"));
+		return debt;
+	}
+	
 	
 
 	
