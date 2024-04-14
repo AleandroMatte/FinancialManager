@@ -1,7 +1,5 @@
 package com.aleandro.financial.shared.service;
 
-import java.util.logging.Logger;
-
 public class BaseService {
 
 	

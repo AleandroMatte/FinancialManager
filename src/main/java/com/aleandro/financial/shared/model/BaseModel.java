@@ -2,8 +2,6 @@ package com.aleandro.financial.shared.model;
 
 import java.sql.Timestamp;
 
-import org.springframework.hateoas.RepresentationModel;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
