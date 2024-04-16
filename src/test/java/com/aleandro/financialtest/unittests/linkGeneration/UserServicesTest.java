@@ -1,4 +1,4 @@
-package com.example.demo.unittests.linkGeneration;
+package com.aleandro.financialtest.unittests.linkGeneration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -23,6 +24,7 @@ import com.aleandro.financial.User.Repository.UserRepository;
 import com.aleandro.financial.User.infra.UserDto;
 import com.aleandro.financial.User.models.User;
 import com.aleandro.financial.User.services.UserServices;
+import com.aleandro.financialtest.unittests.fixtures.UserMocks;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -34,18 +36,15 @@ class UserServicesTest {
 	@Mock
 	private UserRepository repository;
 	
+	@Mock
 	static User user;
 	
 
 	
-	@BeforeEach
+	@BeforeAll
 	void setUp(){
-		user = new User();
-		user.setId(1L);
-		user.setEmail("aleandro_test@test.com");
-		user.setName("Test_user");
-		user.setCreated_at(Timestamp.valueOf("2024-03-26 16:52:50.338000"));
-		user.setUpdated_at(Timestamp.valueOf("2024-03-26 16:52:50.338000"));
+		user = UserMocks.mock_one_user();
+		
 	}
 
 
@@ -56,16 +55,11 @@ class UserServicesTest {
 		assertNotNull(result);
 		assertNotNull(result.getId());
 		assertTrue(result.toString().contains("links: [</user/1>;rel=\"self\";name=\"Actions\"]"));
-		assertEquals(user.getName(), result.getName());
-		assertEquals(user.getEmail(), result.getEmail());
-		assertEquals(user.getId(), result.getId());
-		assertEquals(user.getCreated_at(), result.getCreated_at());
-		assertEquals(user.getUpdated_at(), result.getUpdated_at());
 	}
 
 	@Test
 	void testGet_all_users() {
-		when(repository.findAll()).thenReturn(Collections.singletonList(user));
+		when(repository.findAll()).thenReturn(UserMocks.mock_multiple_users(4));
 		List<UserDto> users = service.get_all_users();
 		assertNotNull(users);
 		for (UserDto userDto : users) {

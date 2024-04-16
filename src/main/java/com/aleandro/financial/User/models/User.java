@@ -21,6 +21,8 @@ public class User extends BaseModel {
 	public User() {
 		
 	}
+	
+
 
 
 	public String getName() {
