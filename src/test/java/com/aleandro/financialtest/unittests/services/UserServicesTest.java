@@ -1,5 +1,6 @@
-package com.aleandro.financialtest.unittests.linkGeneration;
+package com.aleandro.financialtest.unittests.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -37,7 +39,7 @@ class UserServicesTest {
 	
 
 	
-	@BeforeAll
+	@BeforeEach()
 	void setUp(){
 		user = UserMocks.mock_one_user();
 		
@@ -50,8 +52,11 @@ class UserServicesTest {
 		UserDto result = service.findById(user.getId());
 		assertNotNull(result);
 		assertNotNull(result.getId());
-		System.out.println(result.toString());
-		assertTrue(result.toString().contains("links: [</user/0>;rel=\"self\";name=\"Actions\"]"));
+		assertEquals(user.getId(), result.getId());
+		assertEquals(user.getEmail(), result.getEmail());
+		assertEquals(user.getName(), result.getName());
+		assertEquals(user.getUpdated_at(),result.getUpdated_at());
+		assertEquals(user.getCreated_at(), result.getCreated_at());
 	}
 
 	@Test
@@ -60,7 +65,12 @@ class UserServicesTest {
 		List<UserDto> users = service.get_all_users();
 		assertNotNull(users);
 		for (UserDto userDto : users) {
-			assertTrue(userDto.toString().contains("links: [</user/1>;rel=\"self\";name=\"Actions\"]"));
+			assertNotNull(userDto);
+			assertEquals(user.getId(), userDto.getId());
+			assertEquals(user.getEmail(), userDto.getEmail());
+			assertEquals(user.getName(), userDto.getName());
+			assertEquals(user.getUpdated_at(),userDto.getUpdated_at());
+			assertEquals(user.getCreated_at(), userDto.getCreated_at());
 			
 		}
 	}

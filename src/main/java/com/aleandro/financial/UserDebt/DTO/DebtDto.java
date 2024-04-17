@@ -23,11 +23,6 @@ public class DebtDto  extends BaseDto{
 	
 	
 
-	@Override
-	public String toString() {
-		return "DebtDto [user_id=" + user_id + ", valor=" + valor + ", destino=" + destino + ", paga=" + paga
-				+ ", recorrencia_id=" + recorrencia_id + ", data_pagamento=" + data_pagamento + "]";
-	}
 
 
 

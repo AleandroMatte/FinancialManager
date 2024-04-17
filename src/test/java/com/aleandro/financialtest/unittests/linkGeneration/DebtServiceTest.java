@@ -1,5 +1,6 @@
-package com.aleandro.financialtest.unittests.services;
+package com.aleandro.financialtest.unittests.linkGeneration;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -46,15 +47,9 @@ public class DebtServiceTest {
 		DebtDto found_debt = service.get_debt_by_id(debt.getId(), debt.getUser_id().getId());
 		assertNotNull(found_debt);
 		assertNotNull(found_debt.getId());
-		assertEquals(found_debt.getId(), debt.getId());
-		assertEquals(found_debt.getData_pagamento(), debt.getData_pagamento());
-		assertEquals(found_debt.getDestino(), debt.getDestino());
-		assertEquals(found_debt.getPaga(), debt.getPaga());
-		assertEquals(found_debt.getUser_id(), debt.getUser_id().getId());
-		assertEquals(found_debt.getValor(), debt.getValor());
-		assertEquals(found_debt.getCreated_at(), debt.getCreated_at());
-		assertEquals(found_debt.getUpdated_at(), debt.getUpdated_at());
+		assertTrue(found_debt.toString().contains("links: [</user/1/debt/1>;rel=\"self\";name=\"Actions\"]"));
 	}
+
 
 	@Test
 	void testGet_user_debts() {
@@ -63,12 +58,7 @@ public class DebtServiceTest {
 		for(DebtDto found_debt : lista_dividas) {	
 			assertNotNull(found_debt);
 			assertNotNull(found_debt.getId());
-			assertEquals(found_debt.getId(), debt.getId());
-			assertEquals(found_debt.getData_pagamento(), debt.getData_pagamento());
-			assertEquals(found_debt.getDestino(), debt.getDestino());
-			assertEquals(found_debt.getPaga(), debt.getPaga());
-			assertEquals(found_debt.getUser_id(), debt.getUser_id().getId());
-			assertEquals(found_debt.getValor(), debt.getValor());
+			assertTrue(found_debt.toString().contains("links: [</user/1/debt/1>;rel=\"self\";name=\"Actions\"]"));
 	}
 
 
