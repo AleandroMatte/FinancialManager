@@ -1,6 +1,10 @@
 package com.aleandro.financial.User.models;
 
+import java.util.Collection;
 import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.aleandro.financial.shared.model.BaseModel;
 
@@ -10,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity(name = "user")
 @Table(name = "user")
-public class User extends BaseModel {
+public class User extends BaseModel{
 	
 	@Column(name = "username", nullable = false)
 	private String name;
@@ -69,8 +73,9 @@ public class User extends BaseModel {
 		User other = (User) obj;
 		return Objects.equals(email, other.email) && Objects.equals(name, other.name);
 	}
-	
-	
-	
+
+
+
+
 
 }

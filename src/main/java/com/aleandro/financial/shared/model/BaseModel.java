@@ -12,9 +12,9 @@ import jakarta.persistence.MappedSuperclass;
 public abstract class BaseModel {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "id")
-	protected Long id;
+	protected String id;
 	@Column(name = "created_at")
 	protected Timestamp created_at =  new Timestamp(System.currentTimeMillis());
 	@Column(name = "updated_at")
@@ -24,11 +24,11 @@ public abstract class BaseModel {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
