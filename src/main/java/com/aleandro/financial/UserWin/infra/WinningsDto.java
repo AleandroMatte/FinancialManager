@@ -1,6 +1,7 @@
 package com.aleandro.financial.UserWin.infra;
 
 import java.util.Date;
+import java.util.UUID;
 
 import com.aleandro.financial.shared.infra.BaseDto;
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -11,9 +12,9 @@ public class WinningsDto extends BaseDto {
 	private String origem;
 	private Boolean recebida;
 	@JsonAlias({"recorrencia"})
-	private Long recorrencia_id;
+	private UUID recorrencia_id;
 	private Date data_recebimento;
-	private Long user_id;
+	private UUID user_id;
 	
 	public WinningsDto() {
 		// TODO Auto-generated constructor stub
@@ -42,10 +43,10 @@ public class WinningsDto extends BaseDto {
 	}
 	
 	
-	public Long getRecorrencia() {
+	public UUID getRecorrencia() {
 		return recorrencia_id;
 	}
-	public void setRecorrencia(Long recorrencia) {
+	public void setRecorrencia(UUID recorrencia) {
 		this.recorrencia_id = recorrencia;
 	}
 	public Date getData_recebimento() {
@@ -54,12 +55,12 @@ public class WinningsDto extends BaseDto {
 	public void setData_recebimento(Date data_recebimento) {
 		this.data_recebimento = data_recebimento;
 	}
-	public Long getUser_id() {
+	public UUID getUser_id() {
 		return user_id;
 	}
 
 	
-	public void setUser_id(Long user_id) {
+	public void setUser_id(UUID user_id) {
 		this.user_id = user_id;
 	}
 	@Override

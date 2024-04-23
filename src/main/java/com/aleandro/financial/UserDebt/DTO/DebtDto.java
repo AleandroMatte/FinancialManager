@@ -1,6 +1,7 @@
 package com.aleandro.financial.UserDebt.DTO;
 
 import java.util.Date;
+import java.util.UUID;
 
 import com.aleandro.financial.shared.infra.BaseDto;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -9,11 +10,11 @@ import com.github.dozermapper.core.Mapping;
 @JsonPropertyOrder({"valor", "destino", "paga","user_id","data_pagamento"})
 public class DebtDto  extends BaseDto{
 	
-	private Long user_id;
+	private UUID user_id;
 	private Double valor;
 	private String destino;
 	private Boolean paga;
-	private Long recorrencia_id;
+	private UUID recorrencia_id;
 	private Date data_pagamento;
 
 	public DebtDto() {
@@ -27,13 +28,13 @@ public class DebtDto  extends BaseDto{
 
 
 
-	public Long getRecorrencia_id() {
+	public UUID getRecorrencia_id() {
 		return recorrencia_id;
 	}
 
 
 
-	public void setRecorrencia_id(Long recorrencia_id) {
+	public void setRecorrencia_id(UUID recorrencia_id) {
 		this.recorrencia_id = recorrencia_id;
 	}
 
@@ -73,11 +74,11 @@ public class DebtDto  extends BaseDto{
 	}
 
 	@Mapping(value = "user_id")
-	public Long getUser_id() {
+	public UUID getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(Long user_id) {
+	public void setUser_id(UUID user_id) {
 		this.user_id = user_id;
 	}
 

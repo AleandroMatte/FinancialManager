@@ -1,6 +1,7 @@
 package com.aleandro.financial.shared.infra;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = "_links")
 public abstract class BaseDto extends RepresentationModel<BaseDto> {
 	
-	protected Long id;
+	protected UUID id;
 	
 	protected Timestamp created_at =  new Timestamp(System.currentTimeMillis());
 	protected Timestamp updated_at = new Timestamp(System.currentTimeMillis());
@@ -17,11 +18,11 @@ public abstract class BaseDto extends RepresentationModel<BaseDto> {
 
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

@@ -2,6 +2,7 @@ package com.aleandro.financial.User.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,7 +33,7 @@ public class UserController {
 	@CrossOrigin(methods = {RequestMethod.GET})
 	@GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,
 											MediaType.APPLICATION_XML_VALUE})
-	public UserDto find_user_by_id(@PathVariable Long id) {
+	public UserDto find_user_by_id(@PathVariable UUID id) {
 		return user_service.findById(id);
 
 	}
@@ -65,7 +66,7 @@ public class UserController {
 	
 	@CrossOrigin(methods = {RequestMethod.DELETE})
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<?> remove_user_by_id(@PathVariable Long id) {
+	public ResponseEntity<?> remove_user_by_id(@PathVariable UUID id) {
 		user_service.delete_user(id);
 		return ResponseEntity.noContent().build();
 	}

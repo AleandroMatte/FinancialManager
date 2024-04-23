@@ -6,6 +6,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class DebtService extends BaseService {
 		debt_repository.save(debt);
 	}
 	
-	public DebtDto get_debt_by_id(Long user_id, Long debt_id) {
+	public DebtDto get_debt_by_id(UUID user_id, UUID debt_id) {
 		Optional<Debt> debt = debt_repository.CustomfindByUser_idAndDebt_id(user_id,debt_id);
 		if (debt.isEmpty()) {throw new DataNotFoundException("debt not found!");}
 		DebtDto debt_vo = debt_mapper.ParseDebtToVo(debt.get());
@@ -63,7 +64,7 @@ public class DebtService extends BaseService {
 		return debt_with_self_links;
 	}
 	
-	public List<DebtDto> get_user_debts(Long user_id){
+	public List<DebtDto> get_user_debts(UUID user_id){
 		List<Debt> user_debts = debt_repository.CustomfindByUser_id(user_id);
 		
 		List<DebtDto> user_debts_vo = debt_mapper.ParseListDebtsToVo(user_debts);
@@ -89,7 +90,7 @@ public class DebtService extends BaseService {
 		}
 		
 	
-	public void delete_debt_by_id(Long user_id,Long debt_id){
+	public void delete_debt_by_id(UUID user_id,UUID debt_id){
 		debt_repository.CustomDeleteByIds(user_id,debt_id);
 		
 	}
