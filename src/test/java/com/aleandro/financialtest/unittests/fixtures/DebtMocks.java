@@ -4,8 +4,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
-
 import com.aleandro.financial.UserDebt.model.Debt;
 import com.aleandro.financial.UserDebt.model.TypeDebt;
 

@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.aleandro.financial.User.models.User;
 
 public  class UserMocks {

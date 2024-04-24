@@ -2,8 +2,6 @@ package com.aleandro.financial.User.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +24,7 @@ public class UserServices extends BaseService {
 
 	}
 	
-	public UserDto findById(UUID id) {
+	public UserDto findById(Long id) {
 		User user = user_repository.findById(id).orElseThrow();
 		UserDto parsed_user = DozerMapper.parseObject(user, UserDto.class);
 		
@@ -55,7 +53,7 @@ public class UserServices extends BaseService {
 
 	}
 	
-	public void delete_user(UUID id)  {
+	public void delete_user(Long id)  {
 		user_repository.deleteById(id);
 	}
 	

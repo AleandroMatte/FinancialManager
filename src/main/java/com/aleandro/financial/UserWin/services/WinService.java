@@ -6,7 +6,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +53,7 @@ public class WinService {
 		win_repository.save(win);
 	}
 	
-	public WinningsDto get_win_by_id(UUID user_id, UUID debt_id) {
+	public WinningsDto get_win_by_id(Long user_id, Long debt_id) {
 		Optional<Winnings> win = win_repository.CustomfindByUser_idAndDebt_id(user_id,debt_id);
 		
 		
@@ -64,7 +63,7 @@ public class WinService {
 		return wins_with_link;
 	}
 	
-	public List<WinningsDto> get_user_wins(UUID user_id){
+	public List<WinningsDto> get_user_wins(Long user_id){
 		List<Winnings> user_wins = win_repository.CustomfindByUser_id(user_id);
 		List<WinningsDto> user_wins_vo = win_mapper.ParseListDebtsToVo(user_wins);
 		List<WinningsDto> user_wins_with_links = new ArrayList<>();
@@ -89,7 +88,7 @@ public class WinService {
 								}
 		
 	
-	public void delete_debt_by_id(UUID user_id,UUID debt_id){
+	public void delete_debt_by_id(Long user_id,Long debt_id){
 		win_repository.CustomDeleteByIds(user_id,debt_id);
 		
 	}

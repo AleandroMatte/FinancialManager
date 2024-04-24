@@ -1,8 +1,6 @@
 package com.aleandro.financial.shared.model;
 
 import java.sql.Timestamp;
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,9 +11,9 @@ import jakarta.persistence.MappedSuperclass;
 public abstract class BaseModel {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	protected UUID id;
+	protected Long id;
 	@Column(name = "created_at")
 	protected Timestamp created_at =  new Timestamp(System.currentTimeMillis());
 	@Column(name = "updated_at")
@@ -25,11 +23,11 @@ public abstract class BaseModel {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public UUID getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

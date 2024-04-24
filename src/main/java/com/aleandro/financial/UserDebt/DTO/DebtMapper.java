@@ -3,8 +3,6 @@ package com.aleandro.financial.UserDebt.DTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +50,7 @@ public class DebtMapper {
 		if(origin_object.getUser_id().getId() == null) {
 			throw new MappingException("Debts must be assigned to a user");
 		}
-		UUID user_id = origin_object.getUser_id().getId();
+		Long user_id = origin_object.getUser_id().getId();
 		novo_Vo.setUser_id(user_id);
 		novo_Vo.setRecorrencia_id(origin_object.getRecorrencia().getId());
 		return novo_Vo;

@@ -1,10 +1,6 @@
 package com.aleandro.financial.User.models;
 
-import java.util.Collection;
 import java.util.Objects;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.aleandro.financial.shared.model.BaseModel;
 

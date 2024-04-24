@@ -1,8 +1,6 @@
 package com.aleandro.financial.UserDebt.controller;
 
 import java.util.List;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +19,6 @@ import com.aleandro.financial.UserDebt.DTO.DebtDto;
 import com.aleandro.financial.UserDebt.service.DebtService;
 import com.aleandro.financial.exceptions.DataNotFoundException;
 
-import io.swagger.v3.oas.annotations.Operation;
-
 
 @RestController
 @RequestMapping("/user/{user_id}/debt")
@@ -40,21 +36,21 @@ public class UserDebtController {
 	
 	@CrossOrigin(methods = {RequestMethod.GET})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{debt_id}")
-	public ResponseEntity<?> getDebtById(@PathVariable UUID user_id, @PathVariable UUID debt_id) {
+	public ResponseEntity<?> getDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
 		DebtDto debt = debt_service.get_debt_by_id(user_id,debt_id);
 		return ResponseEntity.ok(debt);
 	}
 	
 	@CrossOrigin(methods = {RequestMethod.GET})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getAllUserDebts(@PathVariable UUID user_id) {
+	public ResponseEntity<?> getAllUserDebts(@PathVariable Long user_id) {
 		List<DebtDto> user_debts_with_added_links = debt_service.get_user_debts(user_id);
 		return ResponseEntity.ok(user_debts_with_added_links);
 	}
 	
 	@CrossOrigin(methods = {RequestMethod.POST})
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> postUserDebt(@PathVariable UUID user_id, @RequestBody DebtDto debt_data) {
+	public ResponseEntity<?> postUserDebt(@PathVariable Long user_id, @RequestBody DebtDto debt_data) {
 		try {
 			debt_data.setUser_id(user_id);
 			debt_service.post_debt(debt_data);	
@@ -70,7 +66,7 @@ public class UserDebtController {
 	
 	@CrossOrigin(methods = {RequestMethod.DELETE})
 	@DeleteMapping("/{debt_id}")
-	public ResponseEntity<?> deleteDebtById(@PathVariable UUID user_id, @PathVariable UUID debt_id) {
+	public ResponseEntity<?> deleteDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
 		debt_service.delete_debt_by_id(user_id,debt_id);
 		
 		return ResponseEntity.status(201).build();
@@ -78,8 +74,8 @@ public class UserDebtController {
 	
 	@CrossOrigin(methods = {RequestMethod.PUT})
 	@PutMapping( consumes = MediaType.APPLICATION_JSON_VALUE, path = "{debt_id}")
-	public ResponseEntity<?> updateDebt(@PathVariable UUID user_id,
-										   @PathVariable UUID debt_id,
+	public ResponseEntity<?> updateDebt(@PathVariable Long user_id,
+										   @PathVariable Long debt_id,
 										   @RequestBody DebtDto debt_data) {
 		debt_data.setUser_id(user_id);
 		debt_data.setId(debt_id);
