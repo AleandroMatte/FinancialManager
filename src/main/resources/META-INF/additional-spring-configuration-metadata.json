@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "spring.security.jwt.secret-key",
+    "type": "java.lang.String",
+    "description": "secret key to encode and decode the effing tokens"
+  },
+  {
+    "name": "spring.security.jwt.exp-time",
+    "type": "java.lang.String",
+    "description": "Time that my effing token takes to expire"
+  }
+]}

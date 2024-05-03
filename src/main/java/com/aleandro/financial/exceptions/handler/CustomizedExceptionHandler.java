@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.aleandro.financial.exceptions.DataNotFoundException;
 import com.aleandro.financial.exceptions.ExceptionResponse;
+import com.aleandro.financial.exceptions.InvalidJwtAuthException;
 import com.aleandro.financial.exceptions.UnsupportedPathVariable;
 
 @ControllerAdvice
@@ -39,6 +40,13 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(
 				new Date(),ex.getMessage(),request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	@ExceptionHandler(InvalidJwtAuthException.class)
+	public final ResponseEntity<ExceptionResponse> InvalidJwtAuthException(
+			Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(),ex.getMessage(),request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse,HttpStatus.FORBIDDEN);
 	}
 	
 

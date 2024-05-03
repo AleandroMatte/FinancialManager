@@ -7,6 +7,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer   {
+	
+	@SuppressWarnings("unused")
+	private static final MediaType MEDIA_TYPE_APPLICATION_YML = MediaType.valueOf("application/x-yaml");
 
 	public WebConfig(){
 	}

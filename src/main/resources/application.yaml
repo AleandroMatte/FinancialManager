@@ -5,14 +5,18 @@ spring:
       url: jdbc:mysql://localhost:3306/springtesting?useTimezone=true&serverTimezone=UTC
       user: root
       password: 91200399
+  security:
+    jwt:
+      secret-key: d86063e26300455665d834406ed0e9bf4e025c62692aaecb0b0e402ce2a46fb5
+      exp-time: 3600000
+
+ 
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/springtesting?useTimezone=true&serverTimezone=UTC
     username: root
     password: 91200399
-
-    
   jpa:
     hibernate:
       ddl-auto: none
@@ -20,3 +24,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
       show-sql: true
+      
+
