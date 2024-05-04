@@ -70,6 +70,7 @@ public class UserSecModel  implements UserDetails{
 
 
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -189,6 +190,4 @@ public class UserSecModel  implements UserDetails{
 		// TODO Auto-generated method stub
 		return this.enabled;
 	}
-	
-
 }

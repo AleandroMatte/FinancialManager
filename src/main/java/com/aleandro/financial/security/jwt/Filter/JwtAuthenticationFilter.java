@@ -1,4 +1,4 @@
-package com.aleandro.financial.security.jwt;
+package com.aleandro.financial.security.jwt.Filter;
 
 import java.io.IOException;
 
@@ -52,6 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			}
 
 		}
+		filterChain.doFilter(request, response);
 
 	}
 
