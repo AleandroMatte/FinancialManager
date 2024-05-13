@@ -5,14 +5,25 @@ public class RegisterRequest {
 	private String last_name;
 	private String user_name;
 	private String password;
+	private String role;
 	
 	public RegisterRequest() {
 	}
-	public RegisterRequest(String first_name, String last_name, String user_name, String password) {
+	public RegisterRequest(String first_name, String last_name, String user_name, String password,
+			String role) {
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.user_name = user_name;
 		this.password = password;
+		this.role = role;
+	}
+	
+	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public String getFirst_name() {
 		return first_name;
@@ -37,6 +48,11 @@ public class RegisterRequest {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "RegisterRequest [first_name=" + first_name + ", last_name=" + last_name + ", user_name=" + user_name
+				+ ", password=" + password + ", role=" + role + "]";
 	}
 
 	

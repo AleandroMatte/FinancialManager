@@ -54,14 +54,18 @@ public class UserSecModel  implements UserDetails{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public List<String> getRoles(){
+	public List<String> getPermissions(){
 		List<String> roles = new ArrayList<>();
 		for (Permissions permission : this.permissions) {
 			roles.add(permission.getDescription());
 		}
 		return roles;
 	}
+	public void setPermissions(List<Permissions> permissions){
+		this.permissions = permissions;
+	}
 	
+
 	
 
 	public Long getId() {
@@ -190,4 +194,8 @@ public class UserSecModel  implements UserDetails{
 		// TODO Auto-generated method stub
 		return this.enabled;
 	}
-}
+
+
+	}
+	
+	

@@ -11,6 +11,8 @@ public class AuthenticationResponse {
 	public AuthenticationResponse() {
 	}
 
+
+
 	public String getToken() {
 		return token;
 	}
@@ -20,7 +22,6 @@ public class AuthenticationResponse {
 	}
 	
 	
-	
-	
 
+	
 }
