@@ -30,17 +30,20 @@ public class UserSecServices implements UserDetailsService {
 		return null;
 		
 	}
-	public UserDto register_user(UserSecModel user) {
+	public UserSecModel register_user(UserSecModel user) {
 		user.setAccount_non_expired(true);
 		user.setAccount_non_locked(true);
 		user.setCredentials_non_expired(true);
 		user.setEnabled(true);
+		UserSecModel return_user;
 		try {
-			user_sec_repository.save(user);
+			UserSecModel saved_user =  user_sec_repository.save(user);
+			return_user = saved_user;
 		} catch (Exception e) {
 			throw new UserAlreadyExistsException("User already exists, please change the username");
 		}
-		return null;
+		
+		return return_user;
 		
 	}
 

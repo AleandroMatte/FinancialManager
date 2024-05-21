@@ -16,6 +16,7 @@ public interface UserSecRepository extends JpaRepository<UserSecModel, Long>{
 
 	@Query(value = "SELECT * FROM users WHERE user_name =:user_name", nativeQuery = true)
 	public Optional<UserSecModel>findByUsername(@Param("user_name") String user_name);
+
 	
 	
 	

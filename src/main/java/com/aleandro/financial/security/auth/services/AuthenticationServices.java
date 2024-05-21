@@ -1,6 +1,8 @@
 package com.aleandro.financial.security.auth.services;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -41,8 +43,8 @@ public class AuthenticationServices {
 		user.setPassword(pass_encoder.encode(request.getPassword()));
 		Permissions user_role = permissionService.get_permissions_by_description().get(request.getRole());
 		user.setPermissions(Collections.singletonList(user_role));
-		user_service.register_user(user);
-		var token = jwt_service.generateToken(user);
+		user  = user_service.register_user(user);
+		var token = jwt_service.generateToken(generate_user_claims(user),user);
 		AuthenticationResponse auth_response = new AuthenticationResponse(token);
 		
 		return auth_response;
@@ -53,12 +55,20 @@ public class AuthenticationServices {
 		if(user == null) {
 			throw new AuthenticationCredentialsNotFoundException("Incorrect login or password");
 		}
-		if (!pass_encoder.encode(request.getPassword()).equals(user.getPassword())) {
+		if (!(pass_encoder.matches(request.getPassword(),user.getPassword()))) {
 			throw new AuthenticationCredentialsNotFoundException("Incorrect login or password");
 		}
 		
 		
-		return new AuthenticationResponse(jwt_service.generateToken(user));
+		return new AuthenticationResponse(jwt_service.generateToken(generate_user_claims(user),user));
+	}
+	
+	public static Map<String, Object> generate_user_claims(UserSecModel user){
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("User_id", user.getId());
+		claims.put("User role", user.getPermissions());
+		claims.put("User full name", user.getUser_name());
+		return claims;
 	}
 	
 	
