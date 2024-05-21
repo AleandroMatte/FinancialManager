@@ -1,5 +1,5 @@
 ﻿CREATE TABLE IF NOT EXISTS `users` (
-	`id` varchar(255) NOT NULL,
+	`id` bigint NOT NULL,
   `user_name` varchar(255) DEFAULT NULL,
   `full_name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,

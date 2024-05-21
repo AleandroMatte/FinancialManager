@@ -22,7 +22,6 @@ public class PermissionService {
 	
 	public HashMap<String, Permissions> get_permissions_by_description(){
 		List<Permissions> permissions_list = permission_repo.findAll();
-		permissions_list.forEach(System.out::println);
 		HashMap<String, Permissions> permission_dict = new HashMap<>();
 		for (Permissions permission : permissions_list) {
 			permission_dict.put(permission.getDescription(), permission);	

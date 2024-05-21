@@ -1,13 +1,14 @@
 
 spring:
   flyway:
+      enabled: true
       baselineOnMigrate: true
       url: jdbc:mysql://localhost:3306/springtesting?useTimezone=true&serverTimezone=UTC
       user: root
       password: 91200399
   security:
     jwt:
-      secret-key: d86063e26300455665d834406ed0e9bf4e025c62692aaecb0b0e402ce2a46fb5
+      secret-key: "26c3113b753f1fdbe5d25a0a5c9b6a675905d18b14ebf8d53ce8bfcdccf39e15"
       exp-time: 3600000
 
  
@@ -24,5 +25,3 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
       show-sql: true
-      
-

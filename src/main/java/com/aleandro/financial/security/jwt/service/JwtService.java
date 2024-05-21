@@ -23,9 +23,9 @@ import jakarta.annotation.PostConstruct;
 public class JwtService {
 	
 	@Value("${spring.security.jwt.secret-key}")
-	private final String key = "";
+	private  String key = "";
 	@Value("${spring.security.jwt.exp-time}")
-	private final Long exp_token_in_miliseconds = 3600000L;
+	private Long exp_token_in_miliseconds = 3600000L;
 		
 	
 	public JwtService() {

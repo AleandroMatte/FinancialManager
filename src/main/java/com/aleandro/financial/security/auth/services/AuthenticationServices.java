@@ -41,6 +41,7 @@ public class AuthenticationServices {
 		user.setPassword(pass_encoder.encode(request.getPassword()));
 		Permissions user_role = permissionService.get_permissions_by_description().get(request.getRole());
 		user.setPermissions(Collections.singletonList(user_role));
+		user_service.register_user(user);
 		var token = jwt_service.generateToken(user);
 		AuthenticationResponse auth_response = new AuthenticationResponse(token);
 		

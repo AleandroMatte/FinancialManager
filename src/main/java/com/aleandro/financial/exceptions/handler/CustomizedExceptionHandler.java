@@ -14,6 +14,7 @@ import com.aleandro.financial.exceptions.DataNotFoundException;
 import com.aleandro.financial.exceptions.ExceptionResponse;
 import com.aleandro.financial.exceptions.InvalidJwtAuthException;
 import com.aleandro.financial.exceptions.UnsupportedPathVariable;
+import com.aleandro.financial.exceptions.UserAlreadyExistsException;
 
 @ControllerAdvice
 @RestController
@@ -47,6 +48,14 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(
 				new Date(),ex.getMessage(),request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse,HttpStatus.FORBIDDEN);
+	}
+	
+	@ExceptionHandler(UserAlreadyExistsException.class)
+	public final ResponseEntity<ExceptionResponse> UserAlreadyExistsException(
+			Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(),ex.getMessage(),request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
 	}
 	
 

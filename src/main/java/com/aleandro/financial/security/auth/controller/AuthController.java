@@ -1,6 +1,7 @@
 package com.aleandro.financial.security.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +27,9 @@ public class AuthController {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@PostMapping(path = "/register")
+	@PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AuthenticationResponse> register(
 			@RequestBody RegisterRequest request) {
-		System.out.println(request);
 		return ResponseEntity.ok(services.register(request));
 	}
 	@PostMapping("/authenticate")

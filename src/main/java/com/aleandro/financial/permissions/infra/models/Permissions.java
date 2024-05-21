@@ -27,7 +27,7 @@ public class Permissions implements GrantedAuthority {
 
 	@Id
 	@Column(nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@Column(nullable = false)

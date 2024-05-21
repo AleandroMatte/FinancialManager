@@ -1,10 +1,8 @@
 package com.aleandro.financial.UserSec.services;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.aleandro.financial.User.infra.UserDto;
 import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 import com.aleandro.financial.UserSec.repositories.UserSecRepository;
+import com.aleandro.financial.exceptions.UserAlreadyExistsException;
 
 @Service
 public class UserSecServices implements UserDetailsService {
@@ -32,7 +31,15 @@ public class UserSecServices implements UserDetailsService {
 		
 	}
 	public UserDto register_user(UserSecModel user) {
-		user_sec_repository.save(user);
+		user.setAccount_non_expired(true);
+		user.setAccount_non_locked(true);
+		user.setCredentials_non_expired(true);
+		user.setEnabled(true);
+		try {
+			user_sec_repository.save(user);
+		} catch (Exception e) {
+			throw new UserAlreadyExistsException("User already exists, please change the username");
+		}
 		return null;
 		
 	}

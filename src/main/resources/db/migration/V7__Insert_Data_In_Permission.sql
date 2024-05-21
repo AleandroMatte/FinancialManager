@@ -1,4 +1,6 @@
 INSERT INTO `permission` (`id`,`description`) VALUES
-	("281bdbdc-002e-11ef-9829-706979a514f3",'ADMIN'),
-	("281be13b-002e-11ef-9829-706979a514f3",'MANAGER'),
-	("281be2a4-002e-11ef-9829-706979a514f3",'COMMON_USER');
+	(1,'ADMIN'),
+	(2,'MANAGER'),
+	(3,'COMMON_USER');
+
+update permission_seq set next_val=4;
