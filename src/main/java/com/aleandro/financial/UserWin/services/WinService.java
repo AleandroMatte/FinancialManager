@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.aleandro.financial.User.Repository.UserRepository;
 import com.aleandro.financial.User.models.User;
 import com.aleandro.financial.UserDebt.controller.UserDebtController;
+import com.aleandro.financial.UserSec.infra.models.UserSecModel;
+import com.aleandro.financial.UserSec.repositories.UserSecRepository;
 import com.aleandro.financial.UserWin.Model.TypeWinning;
 import com.aleandro.financial.UserWin.Model.Winnings;
 import com.aleandro.financial.UserWin.infra.WinMapper;
@@ -33,14 +35,11 @@ public class WinService {
 	@Autowired
 	private TypeWinRepository type_win_repository;
 	@Autowired
-	private UserRepository user_repository;
-	
-	@Autowired
-	private WinMapper win_mapper = new WinMapper();
-	
+	private UserSecRepository user_repository;
+		
 	
 	public void post_win(WinningsDto data) throws DataNotFoundException{
-		Optional<User> user = user_repository.findById(data.getUser_id());
+		Optional<UserSecModel> user = user_repository.findById(data.getUser_id());
 		if (user.isEmpty()) {
 			throw new DataNotFoundException("User not found!");
 		}

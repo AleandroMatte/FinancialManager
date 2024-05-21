@@ -9,9 +9,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.aleandro.financial.User.models.User;
 import com.aleandro.financial.UserSec.infra.models.UserSecModel;
-import com.aleandro.financial.UserSec.repositories.UserSecRepository;
 import com.aleandro.financial.UserSec.services.UserSecServices;
 import com.aleandro.financial.permissions.infra.models.Permissions;
 import com.aleandro.financial.permissions.services.PermissionService;

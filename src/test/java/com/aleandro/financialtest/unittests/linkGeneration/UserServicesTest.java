@@ -16,10 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.aleandro.financial.User.Repository.UserRepository;
-import com.aleandro.financial.User.infra.UserDto;
-import com.aleandro.financial.User.models.User;
-import com.aleandro.financial.User.services.UserServices;
+import com.aleandro.financial.UserSec.infra.dto.UserSecDto;
+import com.aleandro.financial.UserSec.infra.models.UserSecModel;
+import com.aleandro.financial.UserSec.repositories.UserSecRepository;
+import com.aleandro.financial.UserSec.services.UserSecServices;
 import com.aleandro.financialtest.unittests.fixtures.UserMocks;
 
 
@@ -28,12 +28,12 @@ import com.aleandro.financialtest.unittests.fixtures.UserMocks;
 class UserServicesTest {
 	
 	@InjectMocks
-	private UserServices service;
+	private UserSecServices service;
 	@Mock
-	private UserRepository repository;
+	private UserSecRepository repository;
 	
 	@Mock
-	static User user;
+	static UserSecModel user;
 	
 
 	
@@ -47,7 +47,7 @@ class UserServicesTest {
 	@Test
 	void testFindById() {
 		when(repository.findById(user.getId())).thenReturn(Optional.of(user));
-		UserDto result = service.findById(user.getId());
+		UserSecDto result = service.findById(user.getId());
 		assertNotNull(result);
 		assertNotNull(result.getId());
 		System.out.println(result.toString());
@@ -57,9 +57,9 @@ class UserServicesTest {
 	@Test
 	void testGet_all_users() {
 		when(repository.findAll()).thenReturn(UserMocks.mock_multiple_users(4));
-		List<UserDto> users = service.get_all_users();
+		List<UserSecDto> users = service.get_all_users();
 		assertNotNull(users);
-		for (UserDto userDto : users) {
+		for (UserSecDto userDto : users) {
 			assertTrue(userDto.toString().contains("links: [</user/1>;rel=\"self\";name=\"Actions\"]"));
 			
 		}

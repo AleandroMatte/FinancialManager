@@ -1,5 +1,6 @@
 package com.aleandro.financial.UserSec.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.aleandro.financial.User.infra.UserDto;
+import com.aleandro.financial.UserSec.infra.dto.UserSecDto;
 import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 import com.aleandro.financial.UserSec.repositories.UserSecRepository;
 import com.aleandro.financial.exceptions.UserAlreadyExistsException;
@@ -25,7 +26,7 @@ public class UserSecServices implements UserDetailsService {
 	}
 
 	
-	public UserDto findById(Long id) {
+	public UserSecDto findById(Long id) {
 		UserSecModel user = user_sec_repository.findById(id).orElseThrow();		
 		return null;
 		
@@ -56,6 +57,12 @@ public class UserSecServices implements UserDetailsService {
 		} else {
 			throw new UsernameNotFoundException(username);
 		}
+	}
+
+
+	public List<UserSecDto> get_all_users() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

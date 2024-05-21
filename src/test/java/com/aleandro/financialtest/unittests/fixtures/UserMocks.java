@@ -4,23 +4,19 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import com.aleandro.financial.User.models.User;
+import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 
 public  class UserMocks {
 	
-	public static User mock_one_user() {
-		User mocked = new User();
+	public static UserSecModel mock_one_user() {
+		UserSecModel mocked = new UserSecModel();
 		mocked.setId(1L);
-		mocked.setCreated_at(Timestamp.from(Instant.EPOCH));
-		mocked.setUpdated_at(Timestamp.from(Instant.EPOCH));
-		mocked.setEmail("aleandro_test@test.com");
-		mocked.setName("Test_user");
 		return mocked ;
 		
 	}
 	
-	public static List<User> mock_multiple_users(int num_users){
-		List<User> mocked_list = new ArrayList<>();
+	public static List<UserSecModel> mock_multiple_users(int num_users){
+		List<UserSecModel> mocked_list = new ArrayList<>();
 		int rep_counter=0;
 		while(rep_counter<num_users) {
 			mocked_list.add(mock_one_user());

@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.aleandro.financial.UserDebt.model.Debt;
+import com.aleandro.financial.UserWin.Model.Winnings;
 import com.aleandro.financial.permissions.infra.models.Permissions;
 
 import jakarta.persistence.Column;
@@ -18,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -54,6 +57,18 @@ public class UserSecModel  implements UserDetails{
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	
+	public UserSecModel(String user_name, String full_name, String password, List<Permissions> permissions) {
+		super();
+		this.user_name = user_name;
+		this.full_name = full_name;
+		this.password = password;
+		this.permissions = permissions;
+	}
+
+
+
 	public List<String> getPermissions(){
 		List<String> roles = new ArrayList<>();
 		for (Permissions permission : this.permissions) {

@@ -18,6 +18,8 @@ import com.aleandro.financial.UserDebt.model.Debt;
 import com.aleandro.financial.UserDebt.model.TypeDebt;
 import com.aleandro.financial.UserDebt.repository.DebtRepository;
 import com.aleandro.financial.UserDebt.repository.TypeDebtRepository;
+import com.aleandro.financial.UserSec.infra.models.UserSecModel;
+import com.aleandro.financial.UserSec.repositories.UserSecRepository;
 import com.aleandro.financial.exceptions.DataNotFoundException;
 import com.aleandro.financial.shared.service.BaseService;
 
@@ -33,14 +35,13 @@ public class DebtService extends BaseService {
 	@Autowired
 	private TypeDebtRepository type_debt_repository;
 	@Autowired
-	private UserRepository user_repository;
+	private UserSecRepository user_repository;
 	
-	@Autowired
-	private DebtMapper debt_mapper = new DebtMapper();
+
 	
 	
 	public void post_debt(DebtDto data) throws DataNotFoundException{
-		Optional<User> user = user_repository.findById(data.getUser_id());
+		Optional<UserSecModel> user = user_repository.findById(data.getUser_id());
 		if (user.isEmpty()) {
 			throw new DataNotFoundException("User not found!");
 		}

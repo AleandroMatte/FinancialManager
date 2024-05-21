@@ -2,7 +2,7 @@ package com.aleandro.financial.UserDebt.model;
 
 import java.util.Date;
 
-import com.aleandro.financial.User.models.User;
+import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 import com.aleandro.financial.shared.model.BaseModel;
 
 import jakarta.persistence.Column;
@@ -33,7 +33,7 @@ public class Debt extends BaseModel {
 
 	@ManyToOne
 	@JoinColumn(name = "fk_user_id", referencedColumnName = "id", nullable = false)
-	private User user_id;
+	private UserSecModel user;
 	
 	
 	
@@ -42,17 +42,19 @@ public class Debt extends BaseModel {
 	@Override
 	public String toString() {
 		return "Dividas [valor=" + valor + ", destino=" + destino + ", paga=" + paga + ", recorrencia=" + recorrencia
-				+ ", data_pagamento=" + data_pagamento + ", user_id=" + user_id + "]";
+				+ ", data_pagamento=" + data_pagamento + ", user_id=" + user.getId() + "]";
 	}
 
 
-	public User getUser_id() {
-		return user_id;
+	public UserSecModel getUser_id() {
+		return user;
 	}
+	
 
 
-	public void setUser_id(User user_id) {
-		this.user_id = user_id;
+
+	public void setUser_id(UserSecModel user) {
+		this.user = user;
 	}
 
 
