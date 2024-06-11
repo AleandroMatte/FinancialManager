@@ -8,12 +8,9 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.aleandro.financial.User.Repository.UserRepository;
-import com.aleandro.financial.User.models.User;
-import com.aleandro.financial.UserDebt.DTO.DebtDto;
-import com.aleandro.financial.UserDebt.DTO.DebtMapper;
 import com.aleandro.financial.UserDebt.controller.UserDebtController;
+import com.aleandro.financial.UserDebt.infra.DebtDto;
+import com.aleandro.financial.UserDebt.infra.DebtMapper;
 import com.aleandro.financial.UserDebt.model.Debt;
 import com.aleandro.financial.UserDebt.model.TypeDebt;
 import com.aleandro.financial.UserDebt.repository.DebtRepository;
@@ -36,6 +33,8 @@ public class DebtService extends BaseService {
 	private TypeDebtRepository type_debt_repository;
 	@Autowired
 	private UserSecRepository user_repository;
+	@Autowired
+	private DebtMapper debt_mapper;
 	
 
 	
@@ -50,7 +49,7 @@ public class DebtService extends BaseService {
 			throw new DataNotFoundException("User not found!");
 		}
 		
-		Debt debt = debt_mapper.ParseVoToDebtEntity(data);
+		Debt debt = debt_mapper.fromDto(data);
 		System.out.println(debt.toString());
 		debt_repository.save(debt);
 	}
@@ -58,15 +57,19 @@ public class DebtService extends BaseService {
 	public DebtDto get_debt_by_id(Long user_id, Long debt_id) {
 		Optional<Debt> debt = debt_repository.CustomfindByUser_idAndDebt_id(user_id,debt_id);
 		if (debt.isEmpty()) {throw new DataNotFoundException("debt not found!");}
-		DebtDto debt_vo = debt_mapper.ParseDebtToVo(debt.get());
+		DebtDto debt_vo = debt_mapper.toDto(debt.get());
 		DebtDto debt_with_self_links = addSelfLinks(debt_vo);
 		return debt_with_self_links;
 	}
 	
 	public List<DebtDto> get_user_debts(Long user_id){
 		List<Debt> user_debts = debt_repository.CustomfindByUser_id(user_id);
+		List<DebtDto> user_debts_vo = new ArrayList<>();
+		for (Debt debt : user_debts) {
+			DebtDto debt_converted = debt_mapper.toDto(debt);
+			user_debts_vo.add(debt_converted);
+		}
 		
-		List<DebtDto> user_debts_vo = debt_mapper.ParseListDebtsToVo(user_debts);
 		List<DebtDto> user_debts_with_link =  new ArrayList<>();
 		user_debts_vo.forEach(x -> user_debts_with_link.add(addSelfLinks(x)));
 		

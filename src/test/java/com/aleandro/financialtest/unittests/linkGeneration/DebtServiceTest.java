@@ -16,7 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.aleandro.financial.UserDebt.DTO.DebtDto;
+import com.aleandro.financial.UserDebt.infra.DebtDto;
 import com.aleandro.financial.UserDebt.model.Debt;
 import com.aleandro.financial.UserDebt.repository.DebtRepository;
 import com.aleandro.financial.UserDebt.service.DebtService;

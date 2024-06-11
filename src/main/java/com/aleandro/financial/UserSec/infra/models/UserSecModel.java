@@ -7,8 +7,6 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.aleandro.financial.UserDebt.model.Debt;
-import com.aleandro.financial.UserWin.Model.Winnings;
 import com.aleandro.financial.permissions.infra.models.Permissions;
 
 import jakarta.persistence.Column;
@@ -20,7 +18,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity

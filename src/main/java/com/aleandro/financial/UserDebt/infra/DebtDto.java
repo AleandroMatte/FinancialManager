@@ -1,4 +1,4 @@
-package com.aleandro.financial.UserDebt.DTO;
+package com.aleandro.financial.UserDebt.infra;
 
 import java.util.Date;
 import com.aleandro.financial.shared.infra.BaseDto;

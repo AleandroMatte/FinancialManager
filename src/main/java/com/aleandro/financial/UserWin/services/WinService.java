@@ -9,9 +9,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.aleandro.financial.User.Repository.UserRepository;
-import com.aleandro.financial.User.models.User;
 import com.aleandro.financial.UserDebt.controller.UserDebtController;
 import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 import com.aleandro.financial.UserSec.repositories.UserSecRepository;
@@ -36,6 +33,8 @@ public class WinService {
 	private TypeWinRepository type_win_repository;
 	@Autowired
 	private UserSecRepository user_repository;
+	@Autowired
+	private WinMapper win_mapper;
 		
 	
 	public void post_win(WinningsDto data) throws DataNotFoundException{
@@ -48,7 +47,7 @@ public class WinService {
 			throw new DataNotFoundException("User not found!");
 		}
 		
-		Winnings win = win_mapper.ParseVoToWinEntity(data);
+		Winnings win = win_mapper.fromDto(data);
 		win_repository.save(win);
 	}
 	
@@ -57,14 +56,17 @@ public class WinService {
 		
 		
 		if (win.isEmpty()) {throw new DataNotFoundException("debt not found!");}
-		WinningsDto win_vo = win_mapper.ParseWinToVo(win.get());
+		WinningsDto win_vo = win_mapper.toDto(win.get());
 		WinningsDto wins_with_link = addSelfLinks(win_vo);
 		return wins_with_link;
 	}
 	
 	public List<WinningsDto> get_user_wins(Long user_id){
 		List<Winnings> user_wins = win_repository.CustomfindByUser_id(user_id);
-		List<WinningsDto> user_wins_vo = win_mapper.ParseListDebtsToVo(user_wins);
+		List<WinningsDto> user_wins_vo = new ArrayList<>();
+		for (Winnings winnings : user_wins) {
+			user_wins_vo.add(win_mapper.toDto(winnings));
+		}
 		List<WinningsDto> user_wins_with_links = new ArrayList<>();
 		user_wins_vo.forEach(x ->user_wins_with_links.add(addSelfLinks(x)));
 		

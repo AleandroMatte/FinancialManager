@@ -8,8 +8,6 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 
 import io.jsonwebtoken.Claims;
@@ -17,7 +15,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class JwtService {

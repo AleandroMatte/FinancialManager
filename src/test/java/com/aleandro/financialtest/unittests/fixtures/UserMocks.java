@@ -1,7 +1,5 @@
 package com.aleandro.financialtest.unittests.fixtures;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import com.aleandro.financial.UserSec.infra.models.UserSecModel;

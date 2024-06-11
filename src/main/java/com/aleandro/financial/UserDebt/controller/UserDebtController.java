@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aleandro.financial.UserDebt.DTO.DebtDto;
+import com.aleandro.financial.UserDebt.infra.DebtDto;
 import com.aleandro.financial.UserDebt.service.DebtService;
 import com.aleandro.financial.exceptions.DataNotFoundException;
 

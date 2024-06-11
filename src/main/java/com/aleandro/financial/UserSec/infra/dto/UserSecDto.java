@@ -2,10 +2,8 @@ package com.aleandro.financial.UserSec.infra.dto;
 
 import java.util.List;
 
-import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 import com.aleandro.financial.permissions.infra.models.Permissions;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class UserSecDto {
 	@JsonIgnoreProperties(value = {"id", "password", "permissions"})
