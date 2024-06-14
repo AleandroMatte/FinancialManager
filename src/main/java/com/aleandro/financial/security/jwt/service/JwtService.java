@@ -18,16 +18,18 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
+
 	
+	public JwtService() {
+
+	}
+
 	@Value("${spring.security.jwt.secret-key}")
 	private  String key = "";
 	@Value("${spring.security.jwt.exp-time}")
 	private Long exp_token_in_miliseconds = 3600000L;
 		
 	
-	public JwtService() {
-
-	}
 
 
 	

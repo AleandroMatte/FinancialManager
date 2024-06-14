@@ -41,7 +41,7 @@ public class UserSecServices implements UserDetailsService {
 			UserSecModel saved_user =  user_sec_repository.save(user);
 			return_user = saved_user;
 		} catch (Exception e) {
-			throw new UserAlreadyExistsException("User already exists, please change the username");
+			throw new UserAlreadyExistsException(e.getMessage());
 		}
 		
 		return return_user;

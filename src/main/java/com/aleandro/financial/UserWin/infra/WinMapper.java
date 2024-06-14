@@ -3,6 +3,7 @@ package com.aleandro.financial.UserWin.infra;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 import com.aleandro.financial.UserSec.repositories.UserSecRepository;
@@ -11,6 +12,7 @@ import com.aleandro.financial.UserWin.Model.Winnings;
 import com.aleandro.financial.UserWin.repository.TypeWinRepository;
 import com.aleandro.financial.exceptions.DataNotFoundException;
 
+@Component
 public class WinMapper {
 	
 		@Autowired
