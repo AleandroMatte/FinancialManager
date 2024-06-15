@@ -22,9 +22,9 @@ public class DebtMapper {
 	}
 
 	@Autowired
-	private static UserSecRepository user_repo;
+	private  UserSecRepository user_repo;
 	@Autowired
-	private static TypeDebtRepository type_debt_repo;
+	private TypeDebtRepository type_debt_repo;
 	
 	public DebtDto toDto(Debt debt_Vo) {
 		DebtDto dto = new DebtDto();
