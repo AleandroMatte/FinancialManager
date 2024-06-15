@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,23 +37,23 @@ public class UserDebtController {
 	
 	@CrossOrigin(methods = {RequestMethod.GET})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{debt_id}")
-	public ResponseEntity<?> getDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
-		DebtDto debt = debt_service.get_debt_by_id(user_id,debt_id);
+	public ResponseEntity<?> getDebtById( @RequestAttribute Long user_id_that_requested, @PathVariable Long debt_id) {
+		DebtDto debt = debt_service.get_debt_by_id(user_id_that_requested,debt_id);
 		return ResponseEntity.ok(debt);
 	}
 	
 	@CrossOrigin(methods = {RequestMethod.GET})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getAllUserDebts(@PathVariable Long user_id) {
-		List<DebtDto> user_debts_with_added_links = debt_service.get_user_debts(user_id);
+	public ResponseEntity<?> getAllUserDebts(@RequestAttribute Long user_id_that_requested) {
+		List<DebtDto> user_debts_with_added_links = debt_service.get_user_debts(user_id_that_requested);
 		return ResponseEntity.ok(user_debts_with_added_links);
 	}
 	
 	@CrossOrigin(methods = {RequestMethod.POST})
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> postUserDebt(@PathVariable Long user_id, @RequestBody DebtDto debt_data) {
+	public ResponseEntity<?> postUserDebt(@RequestAttribute Long user_id_that_requested, @RequestBody DebtDto debt_data) {
 		try {
-			debt_data.setUser_id(user_id);
+			debt_data.setUser_id(user_id_that_requested);
 			debt_service.post_debt(debt_data);	
 			
 		} catch (DataNotFoundException e) {
@@ -66,18 +67,18 @@ public class UserDebtController {
 	
 	@CrossOrigin(methods = {RequestMethod.DELETE})
 	@DeleteMapping("/{debt_id}")
-	public ResponseEntity<?> deleteDebtById(@PathVariable Long user_id, @PathVariable Long debt_id) {
-		debt_service.delete_debt_by_id(user_id,debt_id);
+	public ResponseEntity<?> deleteDebtById(@RequestAttribute Long user_id_that_requested, @PathVariable Long debt_id) {
+		debt_service.delete_debt_by_id(user_id_that_requested,debt_id);
 		
 		return ResponseEntity.status(201).build();
 	}
 	
 	@CrossOrigin(methods = {RequestMethod.PUT})
 	@PutMapping( consumes = MediaType.APPLICATION_JSON_VALUE, path = "{debt_id}")
-	public ResponseEntity<?> updateDebt(@PathVariable Long user_id,
+	public ResponseEntity<?> updateDebt(@RequestAttribute Long user_id_that_requested,
 										   @PathVariable Long debt_id,
 										   @RequestBody DebtDto debt_data) {
-		debt_data.setUser_id(user_id);
+		debt_data.setUser_id(user_id_that_requested);
 		debt_data.setId(debt_id);
 		System.out.println(debt_data);
 		debt_service.update_user_debts(debt_data);
