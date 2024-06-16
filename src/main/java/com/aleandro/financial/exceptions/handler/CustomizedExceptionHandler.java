@@ -16,6 +16,8 @@ import com.aleandro.financial.exceptions.InvalidJwtAuthException;
 import com.aleandro.financial.exceptions.UnsupportedPathVariable;
 import com.aleandro.financial.exceptions.UserAlreadyExistsException;
 
+import io.jsonwebtoken.ExpiredJwtException;
+
 @ControllerAdvice
 @RestController
 public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
@@ -57,6 +59,7 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
 				new Date(),ex.getMessage(),request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
 	}
+
 	
 
 }

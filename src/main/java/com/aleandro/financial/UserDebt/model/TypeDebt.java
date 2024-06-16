@@ -17,4 +17,21 @@ public class TypeDebt extends BaseModel {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "TypeDebt [tipoDivida=" + tipoDivida + "]";
+	}
+
+	public String getTipoDivida() {
+		return tipoDivida;
+	}
+
+	public void setTipoDivida(String tipoDivida) {
+		this.tipoDivida = tipoDivida;
+	}
+	
+	
+	
+	
+
 }

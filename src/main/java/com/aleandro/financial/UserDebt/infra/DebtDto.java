@@ -2,6 +2,7 @@ package com.aleandro.financial.UserDebt.infra;
 
 import java.util.Date;
 import com.aleandro.financial.shared.infra.BaseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
@@ -13,6 +14,7 @@ public class DebtDto  extends BaseDto{
 	private String destino;
 	private Boolean paga;
 	private Long recorrencia_id;
+	@JsonFormat(pattern = "yyyy-mm-dd", shape = JsonFormat.Shape.STRING)
 	private Date data_pagamento;
 
 	public DebtDto() {

@@ -21,7 +21,7 @@ import com.aleandro.financial.UserWin.infra.WinningsDto;
 import com.aleandro.financial.UserWin.services.WinService;
 
 @RestController
-@RequestMapping("/user/{user_id}/wins")
+@RequestMapping("/user/wins")
 public class UserWinningsController {
 
 	public UserWinningsController() {

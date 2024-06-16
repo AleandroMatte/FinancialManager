@@ -1,5 +1,6 @@
 package com.aleandro.financial.UserDebt.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,12 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aleandro.financial.UserDebt.infra.DebtDto;
+import com.aleandro.financial.UserDebt.model.TypeDebt;
 import com.aleandro.financial.UserDebt.service.DebtService;
 import com.aleandro.financial.exceptions.DataNotFoundException;
 
 
 @RestController
-@RequestMapping("/user/{user_id}/debt")
+@RequestMapping("/user/debt")
 public class UserDebtController {
 
 	
@@ -35,6 +37,12 @@ public class UserDebtController {
 	private DebtService debt_service;
 	
 	
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/type_debt")
+	public ResponseEntity<?> getDebtTypes( ) {
+		List<TypeDebt> debt_types = debt_service.get_debt_types();
+		return ResponseEntity.status(200).body(debt_types);
+	}
+	
 	@CrossOrigin(methods = {RequestMethod.GET})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{debt_id}")
 	public ResponseEntity<?> getDebtById( @RequestAttribute Long user_id_that_requested, @PathVariable Long debt_id) {
@@ -45,14 +53,15 @@ public class UserDebtController {
 	@CrossOrigin(methods = {RequestMethod.GET})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllUserDebts(@RequestAttribute Long user_id_that_requested) {
-		List<DebtDto> user_debts_with_added_links = debt_service.get_user_debts(user_id_that_requested);
-		return ResponseEntity.ok(user_debts_with_added_links);
+		HashMap<String, Object> user_debts_data = debt_service.get_user_debts(user_id_that_requested);
+		return ResponseEntity.ok(user_debts_data);
 	}
 	
-	@CrossOrigin(methods = {RequestMethod.POST})
+	@CrossOrigin(methods = {RequestMethod.POST,RequestMethod.OPTIONS })
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> postUserDebt(@RequestAttribute Long user_id_that_requested, @RequestBody DebtDto debt_data) {
 		try {
+			System.out.println(debt_data);
 			debt_data.setUser_id(user_id_that_requested);
 			debt_service.post_debt(debt_data);	
 			
@@ -62,7 +71,7 @@ public class UserDebtController {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(200).build();
 	}
 	
 	@CrossOrigin(methods = {RequestMethod.DELETE})
