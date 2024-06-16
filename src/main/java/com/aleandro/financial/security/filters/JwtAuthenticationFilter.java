@@ -14,6 +14,7 @@ import com.aleandro.financial.UserSec.services.UserSecServices;
 import com.aleandro.financial.security.jwt.service.JwtService;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,7 +38,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				filterChain.doFilter(request, response);
 				return;
 			}
-			final String jwt = authHeader.replace("Bearer ", "");
+			String jwt = authHeader.replace("Bearer ", "");
+
+			
+			try {jwtservice.extractUserName(jwt);}catch (Exception e) {
+					response.sendError(401, "User must be authenticated");
+			}
 			final String user_name = jwtservice.extractUserName(jwt);
 			if (user_name != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserSecModel user = this.user_details_service.loadUserByUsername(user_name);

@@ -5,12 +5,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aleandro.financial.security.auth.requestsdata.AuthenticateRequest;
 import com.aleandro.financial.security.auth.requestsdata.AuthenticationResponse;
 import com.aleandro.financial.security.auth.requestsdata.RegisterRequest;
 import com.aleandro.financial.security.auth.services.AuthenticationServices;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,11 +29,13 @@ public class AuthController {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@CrossOrigin(methods = {RequestMethod.POST})
 	@PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AuthenticationResponse> register(
 			@RequestBody RegisterRequest request) {
 		return ResponseEntity.ok(services.register(request));
 	}
+	@CrossOrigin(methods = {RequestMethod.POST})
 	@PostMapping("/authenticate")
 	public ResponseEntity<AuthenticationResponse> authenticate(
 			@RequestBody AuthenticateRequest request) {

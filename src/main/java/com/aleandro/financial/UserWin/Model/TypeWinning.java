@@ -28,5 +28,7 @@ public class TypeWinning extends BaseModel {
 	public void setRecorrencia(String recorrencia) {
 		this.recorrencia = recorrencia;
 	}
+	
+	
 
 }
