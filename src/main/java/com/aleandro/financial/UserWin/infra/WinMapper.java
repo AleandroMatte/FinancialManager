@@ -15,10 +15,13 @@ import com.aleandro.financial.exceptions.DataNotFoundException;
 @Component
 public class WinMapper {
 	
+	
+		public WinMapper() {}
+
 		@Autowired
-		private static UserSecRepository user_repo;
+		private  UserSecRepository user_repo;
 		@Autowired
-		private static TypeWinRepository type_win_repo;
+		private TypeWinRepository type_win_repo;
 		
 		public WinningsDto toDto(Winnings win_vo) throws DataNotFoundException{
 			WinningsDto dto = new WinningsDto();

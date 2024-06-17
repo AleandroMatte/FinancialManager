@@ -14,7 +14,6 @@ public class DebtDto  extends BaseDto{
 	private String destino;
 	private Boolean paga;
 	private Long recorrencia_id;
-	@JsonFormat(pattern = "yyyy-mm-dd", shape = JsonFormat.Shape.STRING)
 	private Date data_pagamento;
 
 	public DebtDto() {
@@ -23,6 +22,26 @@ public class DebtDto  extends BaseDto{
 	
 	
 	
+	
+	
+
+
+
+
+
+	public DebtDto(DebtDto other_dto) {
+		this.user_id = other_dto.getUser_id();
+		this.valor = other_dto.getValor();
+		this.destino = other_dto.getDestino();
+		this.paga = other_dto.getPaga();
+		this.recorrencia_id = other_dto.getRecorrencia_id();
+		this.data_pagamento = other_dto.getData_pagamento();
+	}
+
+
+
+
+
 
 
 
@@ -82,10 +101,25 @@ public class DebtDto  extends BaseDto{
 		this.user_id = user_id;
 	}
 
+
+
+
+
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "DebtDto [user_id=" + user_id + ", valor=" + valor + ", destino=" + destino + ", paga=" + paga
+				+ ", recorrencia_id=" + recorrencia_id + ", data_pagamento=" + data_pagamento + "]";
+	}
+
 	
 
 
-		// TODO Auto-generated method stub
+	
 		
 	}
 	

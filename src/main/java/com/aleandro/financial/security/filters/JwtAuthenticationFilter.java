@@ -43,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			
 			try {jwtservice.extractUserName(jwt);}catch (Exception e) {
 					response.sendError(401, "User must be authenticated");
+					return;
 			}
 			final String user_name = jwtservice.extractUserName(jwt);
 			if (user_name != null && SecurityContextHolder.getContext().getAuthentication() == null) {

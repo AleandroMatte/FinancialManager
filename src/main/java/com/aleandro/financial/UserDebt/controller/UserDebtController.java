@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aleandro.financial.UserDebt.infra.DebtDto;
@@ -59,11 +60,13 @@ public class UserDebtController {
 	
 	@CrossOrigin(methods = {RequestMethod.POST,RequestMethod.OPTIONS })
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> postUserDebt(@RequestAttribute Long user_id_that_requested, @RequestBody DebtDto debt_data) {
+	public ResponseEntity<?> postUserDebt(@RequestAttribute Long user_id_that_requested, 
+			@RequestBody DebtDto debt_data,
+			@RequestParam(required = false, defaultValue = "1" , value="repetitions") String repetitions) {
 		try {
-			System.out.println(debt_data);
+			System.out.println(debt_data.toString());
 			debt_data.setUser_id(user_id_that_requested);
-			debt_service.post_debt(debt_data);	
+			debt_service.post_debt(debt_data,Long.valueOf(repetitions));	
 			
 		} catch (DataNotFoundException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aleandro.financial.UserDebt.model.TypeDebt;
@@ -58,7 +59,9 @@ public class UserWinningsController {
 	
 	@CrossOrigin(methods = {RequestMethod.POST})
 	@PostMapping(path = "" , consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-	public <T> ResponseEntity<?> postUserWin(@RequestAttribute Long user_id_that_requested, @RequestBody WinningsDto win_data) {
+	public <T> ResponseEntity<?> postUserWin(@RequestAttribute Long user_id_that_requested, 
+			@RequestBody WinningsDto win_data,
+			@RequestParam(required = false,defaultValue = "1" ,name = "repetitions") String repetitions) {
 		win_data.setUser_id(user_id_that_requested);
 		win_service.post_win(win_data);
 		return ResponseEntity.created(null).build();

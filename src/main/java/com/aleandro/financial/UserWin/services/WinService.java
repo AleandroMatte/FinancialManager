@@ -73,7 +73,7 @@ public class WinService {
 		}
 		List<WinningsDto> user_wins_with_links = new ArrayList<>();
 		user_wins_vo.forEach(x ->user_wins_with_links.add(addSelfLinks(x)));
-		HashMap<String, Object> complete_win_data = calculate_debts_properties(user_wins_with_links);
+		HashMap<String, Object> complete_win_data = calculate_wins_properties(user_wins_with_links);
 		
 		return complete_win_data;
 	}
@@ -106,29 +106,28 @@ public class WinService {
 		return win;
 	}
 	
-	private HashMap<String, Object> calculate_debts_properties(List<WinningsDto> wins) {
+	private HashMap<String, Object> calculate_wins_properties(List<WinningsDto> wins) {
 		HashMap<String, Object> win_properties = new HashMap<>();
 		Double total_sum = 0D;
-		Long quantidade_a_receber_este_ano = 0L;
+		Double quantidade_a_receber_este_ano = 0d;
 		Long quantidade_recebidas_este_ano = 0L;
 		Long recebimentos_não_feitos = 0L;
-		Calendar todays_date = Calendar.getInstance();
-		todays_date.setTime(new Date()); 
+		Date todays_date= new Date(); 
 		for (WinningsDto winningDto : wins) {
-			Calendar date = Calendar.getInstance();
-			date.setTime(winningDto.getData_recebimento());
-			if(date.YEAR == todays_date.YEAR && date.MONTH >= todays_date.MONTH
-					&& date.DAY_OF_YEAR >= todays_date.DAY_OF_YEAR ) {
-				total_sum += winningDto.getValor();
-				quantidade_a_receber_este_ano+=1;
-		}
-			if(date.YEAR == todays_date.YEAR && date.MONTH <= todays_date.MONTH
-					&& date.DAY_OF_YEAR <= todays_date.DAY_OF_YEAR) {
-			    quantidade_recebidas_este_ano += winningDto.getRecebida() ? 1 : 0;
-			    recebimentos_não_feitos += winningDto.getRecebida() ? 0 : 1;
+			Date win_date = winningDto.getData_recebimento();
+			if(todays_date.getYear() == win_date.getYear() && winningDto.getRecebida()) {
+				quantidade_recebidas_este_ano += 1;
+				total_sum += winningDto.getValor();}
+			if(todays_date.getYear() == win_date.getYear() && !winningDto.getRecebida()) {
+				quantidade_a_receber_este_ano+=winningDto.getValor();
+			}
+		
+			if(todays_date.getYear() == win_date.getYear() && win_date.before(todays_date) && !winningDto.getRecebida()) {
+				recebimentos_não_feitos += 1;
 				
 			}		
-	}
+			
+	}		
 		win_properties.put("win_data", wins);
 		win_properties.put("total_amount_recieved", total_sum);
 		win_properties.put("num_of_wins_to_recieve", quantidade_a_receber_este_ano);
