@@ -10,9 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aleandro.financial.UserDebt.controller.UserDebtController;
+import com.aleandro.financial.UserDebt.infra.DebtDto;
 import com.aleandro.financial.UserDebt.model.TypeDebt;
 import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 import com.aleandro.financial.UserSec.repositories.UserSecRepository;
@@ -41,7 +43,7 @@ public class WinService {
 	private WinMapper win_mapper;
 		
 	
-	public void post_win(WinningsDto data) throws DataNotFoundException{
+	public void post_win(WinningsDto data , Long repetitions) throws DataNotFoundException{
 		Optional<UserSecModel> user = user_repository.findById(data.getUser_id());
 		if (user.isEmpty()) {
 			throw new DataNotFoundException("User not found!");
@@ -50,11 +52,44 @@ public class WinService {
 		if (type_win.isEmpty()) {
 			throw new DataNotFoundException("User not found!");
 		}
-		
-		Winnings win = win_mapper.fromDto(data);
-		win_repository.save(win);
+		if(repetitions==1) {
+			Winnings win = win_mapper.fromDto(data);
+			win_repository.save(win);
+			return;
+		}
+		insert_wins_repetitions(data,type_win.get(),repetitions);
 	}
 	
+	private void insert_wins_repetitions(WinningsDto data, TypeWinning typeWinning, Long repetitions) {
+		Date data_inicial = data.getData_recebimento();
+		ArrayList<WinningsDto> wins = new ArrayList<>();
+		wins.add(data);
+		for(int i=0;i<repetitions-1;i++) {
+			if(typeWinning.getRecorrencia().equals("Unico")) {
+				break;
+			}
+			if(typeWinning.getRecorrencia().equals("Anual")) {	
+				data_inicial = DateUtils.addYears(data_inicial, 1);
+			}
+			if(typeWinning.getRecorrencia().equals("Semanal")) {	
+				data_inicial = DateUtils.addWeeks(data_inicial, 1);
+			}
+			if(typeWinning.getRecorrencia().equals("Mensal")) {	
+				data_inicial = DateUtils.addMonths(data_inicial, 1);
+			}
+			WinningsDto next_win_data = new WinningsDto(data);
+			next_win_data.setData_recebimento(data_inicial);
+			wins.add(next_win_data);
+		}
+			
+		for (WinningsDto wintDto : wins) {
+			win_repository.save(win_mapper.fromDto(wintDto));
+		}
+		
+		return ; 
+		
+	}
+
 	public WinningsDto get_win_by_id(Long user_id, Long debt_id) {
 		Optional<Winnings> win = win_repository.CustomfindByUser_idAndDebt_id(user_id,debt_id);
 		
@@ -129,8 +164,8 @@ public class WinService {
 			
 	}		
 		win_properties.put("win_data", wins);
-		win_properties.put("total_amount_recieved", total_sum);
-		win_properties.put("num_of_wins_to_recieve", quantidade_a_receber_este_ano);
+		win_properties.put("total_amount_recieved",  String.format("%.2f", total_sum));
+		win_properties.put("num_of_wins_to_recieve", String.format("%.2f",quantidade_a_receber_este_ano));
 		win_properties.put("num_of_wins_recieved", quantidade_recebidas_este_ano);
 		win_properties.put("recebimentos_não_feitos", recebimentos_não_feitos);
 		return win_properties;

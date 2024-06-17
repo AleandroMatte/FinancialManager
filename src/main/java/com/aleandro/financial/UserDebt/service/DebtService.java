@@ -25,7 +25,10 @@ import com.aleandro.financial.UserSec.repositories.UserSecRepository;
 import com.aleandro.financial.UserWin.infra.WinMapper;
 import com.aleandro.financial.UserWin.infra.WinningsDto;
 import com.aleandro.financial.exceptions.DataNotFoundException;
+import com.aleandro.financial.exceptions.DebtAlreadyPaidException;
 import com.aleandro.financial.shared.service.BaseService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class DebtService extends BaseService {
@@ -55,7 +58,7 @@ public class DebtService extends BaseService {
 		if (type_debt.isEmpty()) {
 			throw new DataNotFoundException("type_debt not found!");
 		}
-		if(Long.valueOf(repetitions)==1) {
+		if(repetitions==1) {
 			Debt debt = debt_mapper.fromDto(data);
 			System.out.println(debt.toString());
 			debt_repository.save(debt);
@@ -68,9 +71,10 @@ public class DebtService extends BaseService {
 		Date data_inicial = data.getData_pagamento();
 		ArrayList<DebtDto> debts = new ArrayList<>();
 		debts.add(data);
-		System.out.println(data_inicial);
 		for(int i=0;i<repetitions-1;i++) {
-			System.out.println(data_inicial);
+			if(typeDebt.getTipoDivida().equals("Unico")) {
+				break;
+			}
 			if(typeDebt.getTipoDivida().equals("Anual")) {	
 				data_inicial = DateUtils.addYears(data_inicial, 1);
 			}
@@ -168,7 +172,7 @@ public class DebtService extends BaseService {
 		HashMap<String, Object> debt_properties = new HashMap<>();
 		Double total_sum = 0D;
 		Double quantidade_a_pagar_este_ano = 0D;
-		Double quantidade_pagas_este_ano = 0d;
+		Long quantidade_pagas_este_ano = 0L;
 		Long dividas_nao_pagas = 0L;
 		for (DebtDto debtDto : debts) {
 			Date todays_date = new Date();
@@ -180,18 +184,29 @@ public class DebtService extends BaseService {
 				total_sum += debtDto.getValor();
 			}
 			if(todays_date.getYear() == debt_date.getYear() && debt_date.before(todays_date)) {
-			    quantidade_pagas_este_ano += debtDto.getPaga() ? 1D : 0d;
+			    quantidade_pagas_este_ano += debtDto.getPaga() ? 1L : 0L;
 			    dividas_nao_pagas += debtDto.getPaga() ? 0 : 1;
 				
 			}		
 			
 	}
 		debt_properties.put("Debts", debts);
-		debt_properties.put("to_pay_this_year", quantidade_a_pagar_este_ano);
+		debt_properties.put("to_pay_this_year", String.format("%.2f",quantidade_a_pagar_este_ano));
 		debt_properties.put("number_of_debts_paid", quantidade_pagas_este_ano);
 		debt_properties.put("unpaid_debts", dividas_nao_pagas);
-		debt_properties.put("total_amount_paid", total_sum);
+		debt_properties.put("total_amount_paid", String.format("%.2f",total_sum));
 		return debt_properties;
+		
+	}
+
+	@Transactional
+	public void payDebt(Long user_id, Long debt_id) {
+		Optional<Debt> debt = debt_repository.CustomfindByUser_idAndDebt_id(user_id,debt_id);
+		if (debt.isEmpty()) {throw new DataNotFoundException("debt not found!");}
+		Debt debt_vo = debt.get();
+		if(debt_vo.getPaga()) {throw new DebtAlreadyPaidException();}
+		debt_vo.setPaga(true);
+		debt_repository.save(debt_vo);
 		
 	}
 	

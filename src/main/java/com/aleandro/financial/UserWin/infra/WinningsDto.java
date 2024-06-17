@@ -17,6 +17,19 @@ public class WinningsDto extends BaseDto {
 	public WinningsDto() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public WinningsDto(WinningsDto other_dto) {
+		super();
+		this.valor = other_dto.getValor();
+		this.origem = other_dto.getOrigem();
+		this.recebida = other_dto.getRecebida();
+		this.recorrencia_id = other_dto.getRecorrencia();
+		this.data_recebimento = other_dto.getData_recebimento();
+		this.user_id = other_dto.getUser_id();
+	}
+
+
 	public Double getValor() {
 		return valor;
 	}

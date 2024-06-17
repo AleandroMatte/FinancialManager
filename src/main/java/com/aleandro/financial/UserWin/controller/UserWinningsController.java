@@ -63,7 +63,7 @@ public class UserWinningsController {
 			@RequestBody WinningsDto win_data,
 			@RequestParam(required = false,defaultValue = "1" ,name = "repetitions") String repetitions) {
 		win_data.setUser_id(user_id_that_requested);
-		win_service.post_win(win_data);
+		win_service.post_win(win_data,Long.valueOf(repetitions));
 		return ResponseEntity.created(null).build();
 	}
 	

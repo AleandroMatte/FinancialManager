@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.aleandro.financial.exceptions.DataNotFoundException;
+import com.aleandro.financial.exceptions.DebtAlreadyPaidException;
 import com.aleandro.financial.exceptions.ExceptionResponse;
 import com.aleandro.financial.exceptions.InvalidJwtAuthException;
 import com.aleandro.financial.exceptions.UnsupportedPathVariable;
@@ -66,6 +67,16 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
 				new Date(),ex.getMessage(),request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse,HttpStatus.UNAUTHORIZED);
 	}
+	@ExceptionHandler(DebtAlreadyPaidException.class)
+	public final ResponseEntity<ExceptionResponse> DebtAlreadyPaidException(
+			Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(),"Debt already paid",request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	
 
 	
 
