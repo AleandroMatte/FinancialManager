@@ -85,17 +85,6 @@ public class UserDebtController {
 		return ResponseEntity.status(201).build();
 	}
 	
-	@CrossOrigin(methods = {RequestMethod.PUT})
-	@PutMapping( consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{debt_id}")
-	public ResponseEntity<?> updateDebt(@RequestAttribute Long user_id_that_requested,
-										   @PathVariable Long debt_id,
-										   @RequestBody DebtDto debt_data) {
-		debt_data.setUser_id(user_id_that_requested);
-		debt_data.setId(debt_id);
-		System.out.println(debt_data);
-		debt_service.update_user_debts(debt_data);
-		return ResponseEntity.ok().build();
-	}
 	
 	@CrossOrigin(methods = {RequestMethod.POST})
 	@PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{debt_id}")
@@ -104,6 +93,14 @@ public class UserDebtController {
 			System.out.println(debt_id);
 		debt_service.payDebt(user_id_that_requested,debt_id);
 		return ResponseEntity.ok().build();
+	}
+	@CrossOrigin(methods = {RequestMethod.PUT})
+	@PutMapping( consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{debt_id}")
+	public ResponseEntity<?> updateDebt(@RequestAttribute Long user_id_that_requested,
+			@RequestBody DebtDto debt,
+			@PathVariable(name = "debt_id")String debt_id) {;
+			debt_service.updateDebt(user_id_that_requested, debt, debt_id );
+			return ResponseEntity.ok().build();
 	}
 	
 	

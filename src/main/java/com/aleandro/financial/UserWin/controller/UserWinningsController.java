@@ -66,6 +66,13 @@ public class UserWinningsController {
 		win_service.post_win(win_data,Long.valueOf(repetitions));
 		return ResponseEntity.created(null).build();
 	}
+	@CrossOrigin(methods = {RequestMethod.POST})
+	@PostMapping(path = "{win_id}" , consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+	public <T> ResponseEntity<?> payWin(@RequestAttribute Long user_id_that_requested,
+			@PathVariable(name = "win_id") String win_id) {
+		win_service.pay_win(user_id_that_requested, Long.valueOf(win_id));
+		return ResponseEntity.created(null).build();
+	}
 	
 	@CrossOrigin(methods = {RequestMethod.DELETE})
 	@DeleteMapping("/{win_id}")
@@ -79,11 +86,9 @@ public class UserWinningsController {
 				produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
 				consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<?>  updateWin(@RequestAttribute Long user_id_that_requested,
-										   @PathVariable Long win_id,
+										   @PathVariable String win_id,
 										   @RequestBody WinningsDto win_data) {
-		win_data.setId(win_id);
-		win_data.setUser_id(user_id_that_requested);
-		win_service.update_user_win(win_data);
+		win_service.update_user_win(win_data, user_id_that_requested, win_id);
 
 		return ResponseEntity.ok().build();
 	}

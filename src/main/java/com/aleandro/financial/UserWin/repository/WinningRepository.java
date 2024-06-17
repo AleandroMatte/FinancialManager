@@ -19,7 +19,7 @@ public interface WinningRepository extends BaseInterface<Winnings> {
 	
 	@Query(value = "select * from recebimentos where recebimentos.fk_user_id = ?1 and "
 			+ "recebimentos.id = ?2", nativeQuery = true)
-	Optional<Winnings>CustomfindByUser_idAndDebt_id(Long user_id,Long win_id);
+	Optional<Winnings>CustomfindByUser_idAndWin_id(Long user_id,Long win_id);
 	
 	@Transactional
 	@Modifying

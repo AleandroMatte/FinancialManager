@@ -71,7 +71,7 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
 	public final ResponseEntity<ExceptionResponse> DebtAlreadyPaidException(
 			Exception ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(
-				new Date(),"Debt already paid",request.getDescription(false));
+				new Date(),ex.getMessage(),request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
 	}
 	

@@ -39,12 +39,6 @@ public class Debt extends BaseModel {
 	
 	
 
-	@Override
-	public String toString() {
-		return "Dividas [valor=" + valor + ", destino=" + destino + ", paga=" + paga + ", recorrencia=" + recorrencia
-				+ ", data_pagamento=" + data_pagamento + ", user_id=" + user.getId() + "]";
-	}
-
 
 	public UserSecModel getUser_id() {
 		return user;
@@ -113,6 +107,14 @@ public class Debt extends BaseModel {
 	}
 	
 	
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Dividas [valor=" + valor + ", destino=" + destino + ", paga=" + paga + ", recorrencia=" + recorrencia
+				+ ", data_pagamento=" + data_pagamento + ", user_id=" + user.getId() + "]";
+	}
 	
 
 }

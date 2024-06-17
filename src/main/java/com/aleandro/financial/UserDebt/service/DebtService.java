@@ -209,6 +209,27 @@ public class DebtService extends BaseService {
 		debt_repository.save(debt_vo);
 		
 	}
+
+	@Transactional
+	public void updateDebt(Long user_id_that_requested, DebtDto debt, String debt_id) {
+		Optional<Debt> debt_to_update = debt_repository.findById(Long.valueOf(debt_id));
+		if (debt_to_update.isEmpty()){
+			throw new DataNotFoundException("debt with this id doesn't exist");
+			}
+		Debt original_debt = debt_to_update.get();
+		if(debt.getPaga()!=null) {original_debt.setPaga(debt.getPaga());}
+		if(debt.getData_pagamento()!=null)
+		   {original_debt.setData_pagamento(debt.getData_pagamento());}
+		if(debt.getDestino()!=null && !debt.getDestino().strip().equals(""));
+			{original_debt.setDestino(debt.getDestino());}
+		if(debt.getValor()!=null && debt.getValor()!=0d && debt.getValor()!=0F) {
+			original_debt.setValor(debt.getValor());
+		}
+		
+		original_debt.setId(Long.valueOf(debt_id));
+		debt_repository.save(original_debt);
+		
+	}
 	
 }
 	
