@@ -1,9 +1,14 @@
 package com.aleandro.financial.UserWin.controller;
 
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aleandro.financial.UserDebt.model.TypeDebt;
 import com.aleandro.financial.UserWin.Model.TypeWinning;
+import com.aleandro.financial.UserWin.Model.Winnings;
+import com.aleandro.financial.UserWin.infra.WinAnalyticsData;
 import com.aleandro.financial.UserWin.infra.WinningsDto;
 import com.aleandro.financial.UserWin.services.WinService;
 
@@ -40,6 +47,20 @@ public class UserWinningsController {
 	public ResponseEntity<?> getDebtTypes( ) {
 		List<TypeWinning> win_types = win_service.get_win_types();
 		return ResponseEntity.status(200).body(win_types);
+	}
+	
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,path = "/analytics")
+	public ResponseEntity<?> getUserWinningDataFiltered(
+			@RequestParam(required = false, defaultValue = "Anual",name = "period_type") String period_type,
+			@RequestParam(required = true,name = "period_start") @DateTimeFormat(pattern = "yyyy-MM-dd")
+			Date period_start,
+			@RequestParam(required = true,name = "period_end") @DateTimeFormat(pattern = "yyyy-MM-dd")
+			Date period_end,
+			@RequestAttribute String user_id_that_requested
+			) {
+		//ArrayList<HashMap<String,Set<Object> >> data_filtered = win_service.get_data_filtered(period_type,period_start,period_end);
+		HashMap<String, Object> user_analytics= win_service.get_data_filtered(Long.valueOf(user_id_that_requested),period_start,period_end);
+		return ResponseEntity.status(200).body(user_analytics);
 	}
 	
 	@CrossOrigin(methods = {RequestMethod.GET})

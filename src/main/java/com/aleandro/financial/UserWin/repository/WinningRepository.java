@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aleandro.financial.UserWin.Model.Winnings;
@@ -31,6 +32,10 @@ public interface WinningRepository extends BaseInterface<Winnings> {
 	@Modifying
 	@Query(value = "delete from recebimentos where recebimentos.fk_user_id=?1 && recebimentos.id =?2", nativeQuery = true)
 	void CustomDeleteByIds(Long user_id,Long win_id);
+
+	@Query(value = "select * from recebimentos where fk_user_id=:userId and data_recebimento Between :startDate and :endDate",
+			nativeQuery=true)
+	Optional<List<Winnings>> CustomFindByUserIdFilteredByDates(@Param("userId") Long userId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 
 

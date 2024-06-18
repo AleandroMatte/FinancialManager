@@ -10,6 +10,8 @@ spring:
     jwt:
       secret-key: "26c3113b753f1fdbe5d25a0a5c9b6a675905d18b14ebf8d53ce8bfcdccf39e15"
       exp-time: 3600000
+  
+
 
  
 
@@ -25,3 +27,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
       show-sql: true
+      
+

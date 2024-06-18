@@ -3,12 +3,16 @@ package com.aleandro.financial.UserWin.services;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.text.DateFormatSymbols;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,7 @@ import com.aleandro.financial.UserSec.infra.models.UserSecModel;
 import com.aleandro.financial.UserSec.repositories.UserSecRepository;
 import com.aleandro.financial.UserWin.Model.TypeWinning;
 import com.aleandro.financial.UserWin.Model.Winnings;
+import com.aleandro.financial.UserWin.infra.WinAnalyticsData;
 import com.aleandro.financial.UserWin.infra.WinMapper;
 import com.aleandro.financial.UserWin.infra.WinningsDto;
 import com.aleandro.financial.UserWin.repository.TypeWinRepository;
@@ -214,4 +219,39 @@ public class WinService {
 
 	}
 
+	public HashMap<String, Object> get_data_filtered(Long user_id, Date period_start, Date period_end) {
+		 List<Winnings> lista = win_repository.CustomFindByUserIdFilteredByDates(user_id,period_start,period_end).get();
+		 ArrayList<WinningsDto> lista_retornada = new ArrayList<>();
+		 for (Winnings winnings : lista) {
+			 
+			lista_retornada.add(win_mapper.toDto(winnings));
+		}
+		 return get_data_filtered_by_month(lista_retornada);
+		 
+		
+	}
+	
+	public HashMap<String, Object> get_data_filtered_by_month(ArrayList<WinningsDto> lista_retornada){
+		HashMap<String, WinAnalyticsData> user_analytics = new HashMap<>();
+		for (WinningsDto winnings : lista_retornada) {
+			Date winning_date = winnings.getData_recebimento();
+			@SuppressWarnings("deprecation")
+			String month = new DateFormatSymbols().getMonths()[winning_date.getMonth()];
+			if(user_analytics.containsKey(month)) {user_analytics.get(month).addAnaliticNode(winnings);}
+			else {
+					user_analytics.put(month,new WinAnalyticsData(winnings,month));
+		}
+			
+		}
+		HashMap<String, Object> user_analytics_serialized = new HashMap<>();
+		for (String key : user_analytics.keySet()) {
+			user_analytics_serialized.put(key, user_analytics.get(key).serialize());
+		}
+		
+		
+		return user_analytics_serialized;
+		
+
+}
+	
 }
