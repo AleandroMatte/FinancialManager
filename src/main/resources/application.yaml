@@ -3,9 +3,9 @@ spring:
   flyway:
       enabled: true
       baselineOnMigrate: true
-      url: jdbc:mysql://localhost:3306/springtesting?useTimezone=true&serverTimezone=UTC
-      user: root
-      password: 91200399
+      url: jdbc:mysql://finmanagerdb.cbcs22yk2d8z.us-east-1.rds.amazonaws.com:3306/springtesting?useTimezone=true&serverTimezone=UTC
+      user: admin
+      password: Ale007$$
   security:
     jwt:
       secret-key: "26c3113b753f1fdbe5d25a0a5c9b6a675905d18b14ebf8d53ce8bfcdccf39e15"
@@ -17,9 +17,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/springtesting?useTimezone=true&serverTimezone=UTC
-    username: root
-    password: 91200399
+    url: jdbc:mysql://finmanagerdb.cbcs22yk2d8z.us-east-1.rds.amazonaws.com:3306/springtesting?useTimezone=true&serverTimezone=UTC
+    username: admin
+    password: Ale007$$
   jpa:
     hibernate:
       ddl-auto: none

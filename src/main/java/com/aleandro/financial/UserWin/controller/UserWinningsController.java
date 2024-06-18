@@ -58,7 +58,6 @@ public class UserWinningsController {
 			Date period_end,
 			@RequestAttribute String user_id_that_requested
 			) {
-		//ArrayList<HashMap<String,Set<Object> >> data_filtered = win_service.get_data_filtered(period_type,period_start,period_end);
 		HashMap<String, Object> user_analytics= win_service.get_data_filtered(Long.valueOf(user_id_that_requested),period_start,period_end);
 		return ResponseEntity.status(200).body(user_analytics);
 	}
